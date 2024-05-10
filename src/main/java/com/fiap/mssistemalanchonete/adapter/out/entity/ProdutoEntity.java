@@ -1,23 +1,21 @@
-package com.fiap.mssistemalanchonete.core.domain.entity;
+package com.fiap.mssistemalanchonete.adapter.out.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Entity(name="produto")
 public class ProdutoEntity {
 
     @Id
-    private String code;
+    @Column(name="codigo")
+    private String codigoProduto;
 
     @Column(name="nome")
     private String nome;
@@ -30,5 +28,4 @@ public class ProdutoEntity {
 
     @Column(name="categoria")
     private String categoria;
-
 }

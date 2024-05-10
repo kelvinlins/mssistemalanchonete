@@ -1,27 +1,24 @@
-package com.fiap.mssistemalanchonete.core.domain.entity;
+package com.fiap.mssistemalanchonete.adapter.out.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Entity(name="cliente")
 public class ClienteEntity {
 
     @Id
-    private String cpf;
+    @Column(name="cpf")
+    private String codigoCpf;
 
     @Column(name="nome")
     private String nome;
 
     @Column(name="email")
     private String email;
-
 }
