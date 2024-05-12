@@ -4,12 +4,12 @@ spring:
   datasource:
     continue-on-error: true
     driverClassName: org.postgresql.Driver
-    password: 1234
-    url: jdbc:postgresql://localhost:5432/lanchonete
-    username: postgres
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL81Dialect
