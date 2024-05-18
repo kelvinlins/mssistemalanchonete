@@ -1,29 +1,11 @@
 spring:
-  application:
-    name: mssistemalanchonete
-  datasource:
-    continue-on-error: true
-    driverClassName: org.postgresql.Driver
-    password: 1234
-    url: jdbc:postgresql://localhost:5432/lanchonete
-    username: postgres
   jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL81Dialect
-        format_sql: true
     show-sql: true
   sql:
     init:
       continue-on-error: true
-server:
-  port: 8080
-  servlet:
-    context-path: /sistema-lanchonete/api/v1
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-
+  
+SPRING_DATASOURCE_USERNAME: user
+SPRING_DATASOURCE_PASSWORD: password
+SPRING_JPA_HIBERNATE_DDL_AUTO: update
+SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/lanchonete

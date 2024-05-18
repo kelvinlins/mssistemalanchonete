@@ -2,7 +2,6 @@ spring:
   application:
     name: mssistemalanchonete
   datasource:
-    continue-on-error: true
     driverClassName: org.postgresql.Driver
     password: ${SPRING_DATASOURCE_PASSWORD}
     url: ${SPRING_DATASOURCE_URL}
