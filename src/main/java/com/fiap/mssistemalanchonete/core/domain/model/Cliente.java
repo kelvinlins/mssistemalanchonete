@@ -3,6 +3,7 @@ package com.fiap.mssistemalanchonete.core.domain.model;
 import lombok.*;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

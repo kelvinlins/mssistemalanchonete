@@ -1,15 +1,20 @@
 package com.fiap.mssistemalanchonete.adapter.out.repository;
 
 import com.fiap.mssistemalanchonete.adapter.out.entity.PedidoEntity;
-import com.fiap.mssistemalanchonete.adapter.out.error.exception.PedidoNotFoundException;
+import com.fiap.mssistemalanchonete.core.domain.error.exception.PedidoNotFoundException;
 import com.fiap.mssistemalanchonete.adapter.out.mapper.PedidoMapper;
 import com.fiap.mssistemalanchonete.adapter.out.repository.jpa.IPedidoRepository;
 import com.fiap.mssistemalanchonete.core.domain.model.Pedido;
+import com.fiap.mssistemalanchonete.core.domain.model.StatusPedidoEnum;
 import com.fiap.mssistemalanchonete.core.port.PedidoPort;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 public class PedidoRepository implements PedidoPort {
@@ -25,7 +30,15 @@ public class PedidoRepository implements PedidoPort {
 
     @Override
     public Pedido salvarPedido(Pedido pedido) {
-        return pedidoMapper.toDomain(iPedidoRepository.save(pedidoMapper.toEntity(pedido)));
+        PedidoEntity entity = pedidoMapper.toEntity(pedido);
+        if (Objects.nonNull(entity.getCombos())){
+            entity.getCombos().forEach(comboEntity -> comboEntity.setPedido(entity));
+        }
+        return pedidoMapper.toDomain(
+          iPedidoRepository.save(
+            entity
+          )
+        );
     }
 
     @Override
@@ -34,13 +47,15 @@ public class PedidoRepository implements PedidoPort {
           .orElseThrow(PedidoNotFoundException::new);
 
         pedidoMapper.merge(pedido, pedidoEntity);
+        if (Objects.nonNull(pedidoEntity.getCombos())){
+            pedidoEntity.getCombos().forEach(comboEntity -> comboEntity.setPedido(pedidoEntity));
+        }
         return pedidoMapper.toDomain(iPedidoRepository.save(pedidoEntity));
     }
 
     @Override
-    public Pedido consultarPedidoPorCodigo(String codigo) {
-        var pedidoEntity = iPedidoRepository.findById(codigo)
-          .orElseThrow(PedidoNotFoundException::new);
+    public Optional<Pedido> consultarPedidoPorCodigo(String codigo) {
+        var pedidoEntity = iPedidoRepository.findById(codigo);
         return pedidoMapper.toDomain(pedidoEntity);
     }
 
@@ -50,7 +65,10 @@ public class PedidoRepository implements PedidoPort {
     }
 
     @Override
-    public List<Pedido> listarPedidos() {
-        return List.of();
+    public Page<Pedido> listarPedidos(Pageable pageable, List<StatusPedidoEnum> statusList) {
+        List<String> statusNameList = statusList.stream()
+          .map(StatusPedidoEnum::name)
+          .toList();
+        return pedidoMapper.toDomainPage(iPedidoRepository.findAllByStatusIn(statusNameList, pageable));
     }
 }

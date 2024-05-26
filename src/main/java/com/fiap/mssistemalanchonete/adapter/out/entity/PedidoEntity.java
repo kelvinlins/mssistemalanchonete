@@ -1,19 +1,20 @@
 package com.fiap.mssistemalanchonete.adapter.out.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
-
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,13 +31,15 @@ public class PedidoEntity {
     @ManyToOne
     private ClienteEntity cliente;
 
-    @Column(name = "codigoProduto", nullable = false)
-    @ManyToMany
-    private List<ProdutoEntity> itens;
+    @OneToMany(mappedBy = "id.pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ComboEntity> combos;
 
     @Column(name = "desconto")
     private BigDecimal desconto;
 
     @Column(name = "statusPedido", nullable = false)
     private String status;
+
+    @Column
+    LocalDateTime horaCheckout;
 }
