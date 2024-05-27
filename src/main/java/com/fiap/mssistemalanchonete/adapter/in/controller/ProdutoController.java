@@ -30,7 +30,7 @@ public class ProdutoController {
     )
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<Produto> cadastrarProduto(
-            @RequestBody final Produto produto) throws Exception {
+            @RequestBody final Produto produto) {
         return ResponseEntity.status(HttpStatusCode.valueOf(201))
                 .body(produtoUserCase.salvarProduto(produto));
     }
@@ -41,10 +41,10 @@ public class ProdutoController {
                     @ApiResponse(responseCode = "200", description = "Produto atualizado com sucesso!")
             }
     )
-    @PutMapping(value = "/{codigo}", consumes = "application/json", produces = "application/json")
+    @PatchMapping(value = "/{codigo}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Produto> atualizarProduto(
             @RequestBody final Produto produto,
-            @PathVariable final String codigo) throws Exception {
+            @PathVariable final String codigo) {
         return ResponseEntity.ok(produtoUserCase.atualizarProduto(produto, codigo));
     }
 
@@ -56,7 +56,7 @@ public class ProdutoController {
             }
     )
     @DeleteMapping(value = "/{codigo}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Object> deletarProduto(@PathVariable final String codigo) throws Exception {
+    public ResponseEntity<Object> deletarProduto(@PathVariable final String codigo) {
         produtoUserCase.deletarProduto(codigo);
         return ResponseEntity.noContent().build();
     }
@@ -70,5 +70,16 @@ public class ProdutoController {
     @GetMapping(value = "/{categoria}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<List<Produto>> consultarProdutoPorCategoria(@PathVariable final String categoria) {
         return ResponseEntity.ok(produtoUserCase.consultarProdutoPorCategoria(categoria));
+    }
+
+    @Operation(
+            description = "Retorna todos os produtos",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Produtos retornados com sucesso!")
+            }
+    )
+    @GetMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<List<Produto>> consultarTodosProdutos() {
+        return ResponseEntity.ok(produtoUserCase.consultarTodosProdutos());
     }
 }
