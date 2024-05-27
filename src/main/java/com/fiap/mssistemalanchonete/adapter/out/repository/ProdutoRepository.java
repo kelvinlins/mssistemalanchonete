@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ProdutoRepository implements ProdutoPort {
@@ -40,10 +41,9 @@ public class ProdutoRepository implements ProdutoPort {
     }
 
     @Override
-    public Produto consultarProdutoPorCodigo(String codigo) {
+    public Optional<Produto> consultarProdutoPorCodigo(String codigo) {
         return iProdutoRepository.findById(codigo)
-                .map(produtoMapper::toDomain)
-                .orElse(null);
+                .map(produtoMapper::toDomain);
     }
 
     @Override

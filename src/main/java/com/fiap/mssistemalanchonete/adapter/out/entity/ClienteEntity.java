@@ -13,8 +13,10 @@ import lombok.*;
 public class ClienteEntity {
 
     @Id
+    private String codigo;
+
     @Column(name="cpf")
-    private String codigoCpf;
+    private String cpf;
 
     @Column(name="nome")
     private String nome;

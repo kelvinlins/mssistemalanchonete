@@ -15,7 +15,7 @@ public class ProdutoEntity {
 
     @Id
     @Column(name="codigo")
-    private String codigoProduto;
+    private String codigo;
 
     @Column(name="nome")
     private String nome;
