@@ -1,9 +1,8 @@
 package com.fiap.mssistemalanchonete.adapter.in.controller.dto;
 
-import java.util.List;
+import com.fiap.mssistemalanchonete.core.domain.model.StatusPedidoEnum;
 
 public record AtualizaPedidoRequestDto(
-  List<String> codigoItens,
-  String status
+  StatusPedidoEnum status
 ) {
 }

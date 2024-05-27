@@ -1,6 +1,7 @@
 package com.fiap.mssistemalanchonete.core.userCase.cliente;
 
 
+import com.fiap.mssistemalanchonete.core.domain.error.exception.ClienteNotFoundException;
 import com.fiap.mssistemalanchonete.core.domain.model.Cliente;
 import com.fiap.mssistemalanchonete.core.port.ClientePort;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,10 @@ public class ClienteUserCase {
         if (ObjectUtils.isEmpty(cliente))
             throw new Exception();
         return cliente;
+    }
+
+    public Cliente consultarClientePorCodigo(String codigo) {
+        return clientePort.consultarClientePorCodigo(codigo)
+          .orElseThrow(()-> new ClienteNotFoundException(codigo));
     }
 }

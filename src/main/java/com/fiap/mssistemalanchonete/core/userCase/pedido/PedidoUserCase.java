@@ -3,6 +3,7 @@ package com.fiap.mssistemalanchonete.core.userCase.pedido;
 import com.fiap.mssistemalanchonete.core.domain.error.exception.ComboNotFoundException;
 import com.fiap.mssistemalanchonete.core.domain.error.exception.PedidoNotFoundException;
 import com.fiap.mssistemalanchonete.core.domain.error.exception.PedidoSemProdutosException;
+import com.fiap.mssistemalanchonete.core.domain.error.exception.QuantidadeInvalidaException;
 import com.fiap.mssistemalanchonete.core.domain.model.Combo;
 import com.fiap.mssistemalanchonete.core.domain.model.Pedido;
 import com.fiap.mssistemalanchonete.core.domain.model.Produto;
@@ -15,8 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -24,13 +25,16 @@ import java.util.UUID;
 public class PedidoUserCase {
 
   private final PedidoPort pedidoPort;
+  private final ValidacaoPedido validacao;
 
   @Autowired
-  public PedidoUserCase(PedidoPort pedidoPort){
+  public PedidoUserCase(PedidoPort pedidoPort, ValidacaoPedido validacao){
     this.pedidoPort = pedidoPort;
+    this.validacao = validacao;
   }
 
   public Pedido criarPedido(Pedido pedido) throws Exception {
+    validacao.validarPedido(pedido);
     pedido.setCodigo(UUID.randomUUID().toString());
     pedido.setStatus(StatusPedidoEnum.INICIADO);
     pedido.setCombos(List.of(Combo.builder().id(1).build()));
@@ -38,7 +42,7 @@ public class PedidoUserCase {
   }
 
   public Pedido atualizarPedido(Pedido pedido, String codigo) throws Exception {
-
+    getPedidoPorCodigo(codigo);
     pedido.setCodigo(codigo);
     return pedidoPort.atualizarPedido(pedido);
   }
@@ -50,6 +54,9 @@ public class PedidoUserCase {
 
   public Pedido adicionarProdutos(String codigoPedido, Integer codigoCombo, String codigoProduto, Integer quantidade) throws Exception {
     var pedido = getPedidoPorCodigo(codigoPedido);
+
+    validacao.validarAlteracaoCombosPedido(pedido, codigoProduto, quantidade);
+
     pedido.getCombos().stream()
       .filter(combo -> codigoCombo.equals(combo.getId()))
       .findFirst()
@@ -73,6 +80,9 @@ public class PedidoUserCase {
 
   public Pedido removerProduto(String codigoPedido, Integer comboId, String codigoProduto, Integer quantidade) throws Exception {
     var pedido = getPedidoPorCodigo(codigoPedido);
+
+    validacao.validarAlteracaoCombosPedido(pedido, codigoProduto, quantidade);
+
     pedido.getCombos().stream()
       .filter(combo -> comboId.equals(combo.getId()))
       .findFirst()
@@ -104,6 +114,10 @@ public class PedidoUserCase {
 
   public Integer adicionarCombo(String codigoPedido, Pedido pedidoParaAtualizar) {
     var pedido = getPedidoPorCodigo(codigoPedido);
+
+    validacao.validarStatusAlteracaoCombo(pedido);
+    validacao.validarCombos(pedidoParaAtualizar.getCombos());
+
     var maiorComboId = pedido.getCombos().stream()
       .filter(Objects::nonNull)
       .map(Combo::getId)
@@ -123,16 +137,16 @@ public class PedidoUserCase {
       pedidoParaAtualizar.getCombos().get(0);
   }
 
-  private Pedido getPedidoPorCodigo(String codigoPedido) {
+  public Pedido getPedidoPorCodigo(String codigoPedido) {
     return pedidoPort.consultarPedidoPorCodigo(codigoPedido)
       .orElseThrow(PedidoNotFoundException::new);
   }
 
   public Pedido checkout(String codigoPedido) {
     var pedido = getPedidoPorCodigo(codigoPedido);
-    if (Boolean.TRUE.equals(pedido.semProdutos())){
-      throw new PedidoSemProdutosException();
-    }
+
+    validacao.validarStatusAlteracaoCombo(pedido);
+    validacao.validarQuePedidoTemProdutos(pedido);
 
     pedido.getCombos().removeIf(Combo::semProdutos);
     pedido.setHoraCheckout(LocalDateTime.now());
@@ -143,6 +157,9 @@ public class PedidoUserCase {
 
   public void deletarCombo(String codigoPedido, Integer comboId) {
     var pedido = getPedidoPorCodigo(codigoPedido);
+
+    validacao.validarStatusAlteracaoCombo(pedido);
+
     if (Objects.nonNull(pedido.getCombos())){
       var foiRemovido = pedido.getCombos().removeIf(combo -> comboId.equals(combo.getId()));
       if (Boolean.FALSE.equals(foiRemovido)){

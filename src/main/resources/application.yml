@@ -21,7 +21,8 @@ server:
   port: 8080
   servlet:
     context-path: /sistema-lanchonete/api/v1
-
+  error:
+    include-message: always
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

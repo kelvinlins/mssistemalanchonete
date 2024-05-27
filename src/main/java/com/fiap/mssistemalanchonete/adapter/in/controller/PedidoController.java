@@ -71,12 +71,12 @@ public class PedidoController {
     }
 
     @Operation(
-            description = "Atualiza um pedido existente",
+            description = "Atualiza o status de um pedido existente",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso!")
             }
     )
-    @PutMapping(value = "/{codigoPedido}", consumes = "application/json", produces = "application/json")
+    @PatchMapping(value = "/{codigoPedido}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<PedidoResponseDto> atualizarPedido(
             @RequestBody final AtualizaPedidoRequestDto request,
             @PathVariable final String codigoPedido) throws Exception {
@@ -84,6 +84,22 @@ public class PedidoController {
         return ResponseEntity.ok(
           pedidoDtoMapper.toPedidoResponseDto(
             pedidoUserCase.atualizarPedido(pedido, codigoPedido)
+          )
+        );
+    }
+
+    @Operation(
+            description = "Atualiza o status de um pedido existente",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso!")
+            }
+    )
+    @GetMapping(value = "/{codigoPedido}", produces = "application/json")
+    public ResponseEntity<PedidoResponseDto> getPedido(
+            @PathVariable final String codigoPedido) throws Exception {
+        return ResponseEntity.ok(
+          pedidoDtoMapper.toPedidoResponseDto(
+            pedidoUserCase.getPedidoPorCodigo(codigoPedido)
           )
         );
     }
@@ -183,7 +199,7 @@ public class PedidoController {
     }
 
     @Operation(
-            description = "Retorna uma page de pedidos",
+            description = "Retorna uma page de pedidos para acompanhamento dos clientes",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Pedidos retornados com sucesso!")
             }
@@ -196,7 +212,7 @@ public class PedidoController {
     }
 
     @Operation(
-            description = "Retorna uma page de pedidos",
+            description = "Retorna uma page de pedidos para acompanhamento da cozinha",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Pedidos retornados com sucesso!")
             }
@@ -222,6 +238,3 @@ public class PedidoController {
     }
 
 }
-
-//todo: adicionar error handler
-//Pedido -> combos -> produtos + quantidades ->
