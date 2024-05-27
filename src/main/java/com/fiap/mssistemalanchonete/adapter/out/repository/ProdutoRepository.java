@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class ProdutoRepository implements ProdutoPort {
@@ -29,8 +28,19 @@ public class ProdutoRepository implements ProdutoPort {
     }
 
     @Override
-    public List<Produto> consultarProdutoPorCategoria(String code) {
-        return null; //TODO implementar
+    public List<Produto> consultarProdutoPorCategoria(String categoria) {
+        return iProdutoRepository.findByCategoria(categoria)
+                .stream()
+                .map(produtoMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Produto> consultarTodosProdutos() {
+        return iProdutoRepository.findAll()
+                .stream()
+                .map(produtoMapper::toDomain)
+                .toList();
     }
 
     @Override
@@ -41,9 +51,10 @@ public class ProdutoRepository implements ProdutoPort {
     }
 
     @Override
-    public Optional<Produto> consultarProdutoPorCodigo(String codigo) {
+    public Produto consultarProdutoPorCodigo(String codigo) {
         return iProdutoRepository.findById(codigo)
-                .map(produtoMapper::toDomain);
+                .map(produtoMapper::toDomain)
+                .orElse(null);
     }
 
     @Override
