@@ -35,6 +35,7 @@ public interface PedidoDtoMapper {
   @Mapping(target = "cliente", expression = "java(toDomainCliente(dto.codigoCliente()))")
   Pedido toDomain(CriarPedidoRequestDto dto);
 
+  @Mapping(target = "cliente", expression = "java(pedido.getCodigoClienteAsString())")
   PedidoResponseDto toPedidoResponseDto(Pedido pedido);
 
   Pedido toDomain(AtualizaPedidoRequestDto dto);

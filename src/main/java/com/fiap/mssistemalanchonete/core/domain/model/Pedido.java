@@ -43,4 +43,10 @@ public class Pedido {
           .map(Combo::getSubTotal)
           .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
+    public String getCodigoClienteAsString(){
+        return Objects.nonNull(cliente)?
+          cliente.getCodigoAsString() :
+          null;
+    }
 }

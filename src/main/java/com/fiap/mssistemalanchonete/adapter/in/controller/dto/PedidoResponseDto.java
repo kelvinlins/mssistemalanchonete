@@ -13,6 +13,7 @@ public record PedidoResponseDto(
   List<ComboDto> combos,
   BigDecimal total,
   LocalDateTime horaCheckout,
-  String tempoEspera
+  String tempoEspera,
+  String cliente
 ) {
 }
