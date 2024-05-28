@@ -15,6 +15,7 @@ import com.fiap.mssistemalanchonete.core.domain.model.Cliente;
 import com.fiap.mssistemalanchonete.core.domain.model.Combo;
 import com.fiap.mssistemalanchonete.core.domain.model.Pedido;
 import com.fiap.mssistemalanchonete.core.domain.model.Produto;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -59,8 +60,8 @@ public interface PedidoDtoMapper {
     return combos;
   }
 
-  default Cliente toDomainCliente(String codigoCliente){
-    if (StringUtils.isBlank(codigoCliente)){
+  default Cliente toDomainCliente(Long codigoCliente){
+    if (ObjectUtils.isEmpty(codigoCliente)){
       return null;
     }
     return Cliente.builder().codigo(codigoCliente).build();
@@ -75,7 +76,7 @@ public interface PedidoDtoMapper {
 
   default Page<AcompanhamentoCozinhaResponseDto> toAcompanhamentoCozinhaResponse(Page<Pedido> pedidos){
     return pedidos.map(this::toAcompanhamentoCozinhaResponse);
-  };
+  }
 
   @Mapping(target = "tempoEspera", expression = "java(pedido.getTempoEspera())")
   AcompanhamentoCozinhaResponseDto toAcompanhamentoCozinhaResponse(Pedido pedido);

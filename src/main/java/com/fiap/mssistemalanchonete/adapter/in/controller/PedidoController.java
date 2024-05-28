@@ -12,7 +12,7 @@ import com.fiap.mssistemalanchonete.adapter.in.controller.dto.RemoverProdutosReq
 import com.fiap.mssistemalanchonete.adapter.in.controller.mapper.PedidoDtoMapper;
 import com.fiap.mssistemalanchonete.core.domain.model.Pedido;
 import com.fiap.mssistemalanchonete.core.domain.model.StatusPedidoEnum;
-import com.fiap.mssistemalanchonete.core.userCase.pedido.PedidoUserCase;
+import com.fiap.mssistemalanchonete.core.useCase.pedido.PedidoUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,11 +38,11 @@ import java.util.List;
 @RequestMapping("/pedidos")
 public class PedidoController {
 
-    private final PedidoUserCase pedidoUserCase;
+    private final PedidoUseCase pedidoUserCase;
     private final PedidoDtoMapper pedidoDtoMapper;
 
     @Autowired
-    public PedidoController(PedidoUserCase pedidoUserCase, PedidoDtoMapper pedidoDtoMapper){
+    public PedidoController(PedidoUseCase pedidoUserCase, PedidoDtoMapper pedidoDtoMapper){
         this.pedidoUserCase = pedidoUserCase;
       this.pedidoDtoMapper = pedidoDtoMapper;
     }

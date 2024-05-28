@@ -23,6 +23,7 @@ server:
     context-path: /sistema-lanchonete/api/v1
   error:
     include-message: always
+    include-binding-errors: always
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

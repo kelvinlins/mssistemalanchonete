@@ -1,7 +1,7 @@
 package com.fiap.mssistemalanchonete.adapter.in.controller;
 
 import com.fiap.mssistemalanchonete.core.domain.model.Produto;
-import com.fiap.mssistemalanchonete.core.userCase.produto.ProdutoUserCase;
+import com.fiap.mssistemalanchonete.core.useCase.produto.ProdutoUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.List;
 @RequestMapping("/produtos")
 public class ProdutoController {
 
-    private final ProdutoUserCase produtoUserCase;
+    private final ProdutoUseCase produtoUserCase;
 
     @Autowired
-    public ProdutoController(ProdutoUserCase produtoUserCase){
+    public ProdutoController(ProdutoUseCase produtoUserCase){
         this.produtoUserCase = produtoUserCase;
     }
 
@@ -52,10 +52,10 @@ public class ProdutoController {
     @Operation(
             description = "Deleta produto por codigo",
             responses = {
-                    @ApiResponse(responseCode = "203", description = "Produtos deletado")
+                    @ApiResponse(responseCode = "204", description = "Produtos deletado")
             }
     )
-    @DeleteMapping(value = "/{codigo}", consumes = "application/json", produces = "application/json")
+    @DeleteMapping(value = "/{codigo}", produces = "application/json")
     public ResponseEntity<Object> deletarProduto(@PathVariable final String codigo) {
         produtoUserCase.deletarProduto(codigo);
         return ResponseEntity.noContent().build();
@@ -67,7 +67,7 @@ public class ProdutoController {
                     @ApiResponse(responseCode = "200", description = "Produtos retornados com sucesso!")
             }
     )
-    @GetMapping(value = "/{categoria}", consumes = "application/json", produces = "application/json")
+    @GetMapping(value = "/{categoria}", produces = "application/json")
     public ResponseEntity<List<Produto>> consultarProdutoPorCategoria(@PathVariable final String categoria) {
         return ResponseEntity.ok(produtoUserCase.consultarProdutoPorCategoria(categoria));
     }
@@ -78,7 +78,7 @@ public class ProdutoController {
                     @ApiResponse(responseCode = "200", description = "Produtos retornados com sucesso!")
             }
     )
-    @GetMapping(consumes = "application/json", produces = "application/json")
+    @GetMapping(produces = "application/json")
     public ResponseEntity<List<Produto>> consultarTodosProdutos() {
         return ResponseEntity.ok(produtoUserCase.consultarTodosProdutos());
     }
