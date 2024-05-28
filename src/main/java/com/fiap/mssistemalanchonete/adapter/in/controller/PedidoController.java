@@ -10,10 +10,13 @@ import com.fiap.mssistemalanchonete.adapter.in.controller.dto.CriarPedidoRequest
 import com.fiap.mssistemalanchonete.adapter.in.controller.dto.PedidoResponseDto;
 import com.fiap.mssistemalanchonete.adapter.in.controller.dto.RemoverProdutosRequestDto;
 import com.fiap.mssistemalanchonete.adapter.in.controller.mapper.PedidoDtoMapper;
+import com.fiap.mssistemalanchonete.core.domain.error.ErrorResponse;
 import com.fiap.mssistemalanchonete.core.domain.model.Pedido;
 import com.fiap.mssistemalanchonete.core.domain.model.StatusPedidoEnum;
 import com.fiap.mssistemalanchonete.core.useCase.pedido.PedidoUseCase;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,14 +47,17 @@ public class PedidoController {
     @Autowired
     public PedidoController(PedidoUseCase pedidoUserCase, PedidoDtoMapper pedidoDtoMapper){
         this.pedidoUserCase = pedidoUserCase;
-      this.pedidoDtoMapper = pedidoDtoMapper;
+        this.pedidoDtoMapper = pedidoDtoMapper;
     }
 
     @Operation(
-            description = "Cria novo pedido",
-            responses = {
-                    @ApiResponse(responseCode = "201", description = "Pedido criado com sucesso!")
-            }
+      description = "Cria novo pedido",
+      responses = {
+        @ApiResponse(responseCode = "201", description = "Pedido criado com sucesso!"),
+        @ApiResponse(responseCode = "404",
+          description = "Cliente não encontrado!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+      }
     )
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<PedidoResponseDto> cadastrarPedido(
@@ -64,21 +70,24 @@ public class PedidoController {
           .buildAndExpand(pedidoCriado.getCodigo())
           .toUri();
         return ResponseEntity.created(location)
-                .body(
-                  pedidoDtoMapper.toPedidoResponseDto(pedidoCriado)
-                );
+          .body(
+            pedidoDtoMapper.toPedidoResponseDto(pedidoCriado)
+          );
     }
 
     @Operation(
-            description = "Atualiza o status de um pedido existente",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso!")
-            }
+      description = "Atualiza o status de um pedido existente",
+      responses = {
+        @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso!"),
+        @ApiResponse(responseCode = "404",
+          description = "Pedido não encontrado!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+      }
     )
     @PatchMapping(value = "/{codigoPedido}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<PedidoResponseDto> atualizarPedido(
-            @RequestBody final AtualizaPedidoRequestDto request,
-            @PathVariable final String codigoPedido) throws Exception {
+      @RequestBody final AtualizaPedidoRequestDto request,
+      @PathVariable final String codigoPedido) throws Exception {
         var pedido = pedidoDtoMapper.toDomain(request);
         return ResponseEntity.ok(
           pedidoDtoMapper.toPedidoResponseDto(
@@ -88,14 +97,17 @@ public class PedidoController {
     }
 
     @Operation(
-            description = "Atualiza o status de um pedido existente",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso!")
-            }
+      description = "Atualiza o status de um pedido existente",
+      responses = {
+        @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso!"),
+        @ApiResponse(responseCode = "404",
+          description = "Pedido não encontrado!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+      }
     )
     @GetMapping(value = "/{codigoPedido}", produces = "application/json")
     public ResponseEntity<PedidoResponseDto> getPedido(
-            @PathVariable final String codigoPedido) throws Exception {
+      @PathVariable final String codigoPedido) throws Exception {
         return ResponseEntity.ok(
           pedidoDtoMapper.toPedidoResponseDto(
             pedidoUserCase.getPedidoPorCodigo(codigoPedido)
@@ -106,7 +118,16 @@ public class PedidoController {
     @Operation(
       description = "Adiciona novo combo ao pedido",
       responses = {
-        @ApiResponse(responseCode = "201", description = "Combo criado com sucesso!")
+        @ApiResponse(responseCode = "201", description = "Combo criado com sucesso!"),
+        @ApiResponse(responseCode = "404",
+          description = "Recurso não encontrado!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "406",
+          description = "Status do Pedido não permite alteração!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "400",
+          description = "Quantidade de produto inválida!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
       }
     )
     @PostMapping(value = "/{codigoPedido}/combos",consumes = "application/json", produces = "application/json")
@@ -115,22 +136,31 @@ public class PedidoController {
         Pedido pedido = pedidoDtoMapper.toDomain(request);
         var idComboAdicionado = pedidoUserCase.adicionarCombo(codigoPedido, pedido);
         return ResponseEntity.ok(
-            new CriarComboResponseDto(idComboAdicionado)
-          );
+          new CriarComboResponseDto(idComboAdicionado)
+        );
     }
 
     @Operation(
-            description = "Adiciona um produto a um pedido existente",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso!")
-            }
+      description = "Adiciona um produto a um pedido existente",
+      responses = {
+        @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso!"),
+        @ApiResponse(responseCode = "404",
+          description = "Recurso não encontrado!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "406",
+          description = "Status do Pedido não permite alteração!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "400",
+          description = "Quantidade de produto inválida!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+      }
     )
     @PostMapping(value = "/{codigoPedido}/combos/{comboId}/produtos", consumes = "application/json",
       produces = "application/json")
     public ResponseEntity<PedidoResponseDto> adicionarProdutos(
-            @RequestBody final AdicionarProdutoRequestDto request,
-            @PathVariable final String codigoPedido,
-            @PathVariable final Integer comboId) throws Exception {
+      @RequestBody final AdicionarProdutoRequestDto request,
+      @PathVariable final String codigoPedido,
+      @PathVariable final Integer comboId) throws Exception {
         var pedido = pedidoUserCase.adicionarProdutos(codigoPedido, comboId, request.codigoProduto(), request.quantidade());
         return ResponseEntity.ok(
           pedidoDtoMapper.toPedidoResponseDto(pedido)
@@ -138,15 +168,24 @@ public class PedidoController {
     }
 
     @Operation(
-            description = "Remove uma quantidade de um produto de um combo existente",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso!")
-            }
+      description = "Remove uma quantidade de um produto de um combo existente",
+      responses = {
+        @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso!"),
+        @ApiResponse(responseCode = "406",
+          description = "Status do Pedido não permite alteração!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "404",
+          description = "Recurso não encontrado!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "400",
+          description = "Quantidade de produto inválida!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+      }
     )
     @PatchMapping(value = "/{codigoPedido}/combos/{comboId}/produtos/{codigoProduto}",consumes = "application/json", produces = "application/json")
     public ResponseEntity<PedidoResponseDto> removerProdutos(
       @PathVariable final String codigoProduto,
-            @PathVariable final String codigoPedido,
+      @PathVariable final String codigoPedido,
       @PathVariable final Integer comboId,
       @RequestBody RemoverProdutosRequestDto requestDto) throws Exception {
         var pedido = pedidoUserCase.removerProduto(codigoPedido, comboId, codigoProduto, requestDto.quantidade());
@@ -157,10 +196,13 @@ public class PedidoController {
 
 
     @Operation(
-            description = "Deleta pedido por codigo",
-            responses = {
-                    @ApiResponse(responseCode = "204", description = "Pedidos deletado")
-            }
+      description = "Deleta pedido por codigo",
+      responses = {
+        @ApiResponse(responseCode = "204", description = "Pedidos deletado"),
+        @ApiResponse(responseCode = "404",
+          description = "Pedido não encontrado!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+      }
     )
     @DeleteMapping(value = "/{codigo}", produces = "application/json")
     public ResponseEntity<Object> deletarPedido(@PathVariable final String codigo) throws Exception {
@@ -171,7 +213,10 @@ public class PedidoController {
     @Operation(
       description = "Deleta o combo identificado do pedido",
       responses = {
-        @ApiResponse(responseCode = "204", description = "Pedidos deletado")
+        @ApiResponse(responseCode = "204", description = "Pedidos deletado"),
+        @ApiResponse(responseCode = "404",
+          description = "Recurso não encontrado!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
       }
     )
     @DeleteMapping(value = "/{codigoPedido}/combos/{comboId}", produces = "application/json")
@@ -182,10 +227,10 @@ public class PedidoController {
     }
 
     @Operation(
-            description = "Retorna uma page de pedidos",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Pedidos retornados com sucesso!")
-            }
+      description = "Retorna uma page de pedidos",
+      responses = {
+        @ApiResponse(responseCode = "200", description = "Pedidos retornados com sucesso!")
+      }
     )
     @GetMapping(produces = "application/json")
     public ResponseEntity<Page<PedidoResponseDto>> consultarPedidos(
@@ -198,10 +243,10 @@ public class PedidoController {
     }
 
     @Operation(
-            description = "Retorna uma page de pedidos para acompanhamento dos clientes",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Pedidos retornados com sucesso!")
-            }
+      description = "Retorna uma page de pedidos para acompanhamento dos clientes",
+      responses = {
+        @ApiResponse(responseCode = "200", description = "Pedidos retornados com sucesso!")
+      }
     )
     @GetMapping(value = "/acompanhamento-cliente", produces = "application/json")
     public ResponseEntity<Page<AcompanhamentoClienteResponseDto>> acompanharPedidosCliente(
@@ -211,10 +256,10 @@ public class PedidoController {
     }
 
     @Operation(
-            description = "Retorna uma page de pedidos para acompanhamento da cozinha",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Pedidos retornados com sucesso!")
-            }
+      description = "Retorna uma page de pedidos para acompanhamento da cozinha",
+      responses = {
+        @ApiResponse(responseCode = "200", description = "Pedidos retornados com sucesso!")
+      }
     )
     @GetMapping(value = "/acompanhamento-cozinha", produces = "application/json")
     public ResponseEntity<Page<AcompanhamentoCozinhaResponseDto>> acompanharPedidosCozinha(
@@ -227,7 +272,13 @@ public class PedidoController {
     @Operation(
       description = "Finaliza pedido",
       responses = {
-        @ApiResponse(responseCode = "201", description = "Combo criado com sucesso!")
+        @ApiResponse(responseCode = "201", description = "Combo criado com sucesso!"),
+        @ApiResponse(responseCode = "406",
+          description = "Status do Pedido não permite alteração!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "404",
+          description = "Pedido não encontrado!",
+          content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
       }
     )
     @PostMapping(value = "/{codigoPedido}/checkout", produces = "application/json")
