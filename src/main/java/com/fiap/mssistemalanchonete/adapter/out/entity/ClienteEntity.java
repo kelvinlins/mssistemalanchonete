@@ -1,8 +1,6 @@
 package com.fiap.mssistemalanchonete.adapter.out.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor
@@ -13,9 +11,10 @@ import lombok.*;
 public class ClienteEntity {
 
     @Id
-    private String codigo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long codigo;
 
-    @Column(name="cpf")
+    @Column(name="cpf", unique = true)
     private String cpf;
 
     @Column(name="nome")

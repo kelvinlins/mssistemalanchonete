@@ -1,9 +1,7 @@
-package com.fiap.mssistemalanchonete.core.userCase.pedido;
+package com.fiap.mssistemalanchonete.core.useCase.pedido;
 
 import com.fiap.mssistemalanchonete.core.domain.error.exception.ComboNotFoundException;
 import com.fiap.mssistemalanchonete.core.domain.error.exception.PedidoNotFoundException;
-import com.fiap.mssistemalanchonete.core.domain.error.exception.PedidoSemProdutosException;
-import com.fiap.mssistemalanchonete.core.domain.error.exception.QuantidadeInvalidaException;
 import com.fiap.mssistemalanchonete.core.domain.model.Combo;
 import com.fiap.mssistemalanchonete.core.domain.model.Pedido;
 import com.fiap.mssistemalanchonete.core.domain.model.Produto;
@@ -17,18 +15,17 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class PedidoUserCase {
+public class PedidoUseCase {
 
   private final PedidoPort pedidoPort;
   private final ValidacaoPedido validacao;
 
   @Autowired
-  public PedidoUserCase(PedidoPort pedidoPort, ValidacaoPedido validacao){
+  public PedidoUseCase(PedidoPort pedidoPort, ValidacaoPedido validacao){
     this.pedidoPort = pedidoPort;
     this.validacao = validacao;
   }

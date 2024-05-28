@@ -1,15 +1,15 @@
 package com.fiap.mssistemalanchonete.adapter.out.repository;
 
+import com.fiap.mssistemalanchonete.adapter.out.entity.ClienteEntity;
 import com.fiap.mssistemalanchonete.adapter.out.mapper.ClienteMapper;
 import com.fiap.mssistemalanchonete.adapter.out.repository.jpa.IClienteRepository;
 import com.fiap.mssistemalanchonete.core.domain.model.Cliente;
 import com.fiap.mssistemalanchonete.core.port.ClientePort;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class ClienteRepository implements ClientePort {
@@ -24,6 +24,7 @@ public class ClienteRepository implements ClientePort {
     }
 
     @Override
+    @Transactional
     public Cliente salvarCliente(Cliente cliente) {
         return clienteMapper.toDomain(iClienteRepository.save(clienteMapper.toEntity(cliente)));
     }
@@ -33,19 +34,32 @@ public class ClienteRepository implements ClientePort {
         return iClienteRepository.findAll()
                 .stream()
                 .map(clienteMapper::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public Cliente consultarClientePorCpf(String cpf) {
-        return iClienteRepository.findById(cpf)
+        return iClienteRepository.findByCpf(cpf)
                 .map(clienteMapper::toDomain)
                 .orElse(null);
     }
 
     @Override
-    public Optional<Cliente> consultarClientePorCodigo(String codigo) {
-        return iClienteRepository.findByCodigo(codigo)
-          .map(clienteMapper::toDomain);
+    public Cliente consultarClientePorCodigo(Long codigo) {
+        return iClienteRepository.findById(codigo)
+                .map(clienteMapper::toDomain)
+                .orElse(null);
+    }
+
+    @Override
+    public Cliente atualizarCliente(Cliente clienteAntigo, Cliente clienteNovo) {
+        ClienteEntity clienteEntity = clienteMapper.toEntity(clienteAntigo);
+        clienteMapper.merge(clienteNovo, clienteEntity);
+        return clienteMapper.toDomain(iClienteRepository.save(clienteEntity));
+    }
+
+    @Override
+    public void deletarCliente(Cliente cliente) {
+        iClienteRepository.delete(clienteMapper.toEntity(cliente));
     }
 }

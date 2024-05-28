@@ -2,9 +2,10 @@ package com.fiap.mssistemalanchonete.adapter.in.controller;
 
 import com.fiap.mssistemalanchonete.core.domain.model.Cliente;
 
-import com.fiap.mssistemalanchonete.core.userCase.cliente.ClienteUserCase;
+import com.fiap.mssistemalanchonete.core.useCase.cliente.ClienteUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -12,16 +13,26 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
 
-    private final ClienteUserCase clienteUserCase;
+    private final ClienteUseCase clienteUserCase;
 
     @Autowired
-    public ClienteController(ClienteUserCase clienteUserCase){
+    public ClienteController(ClienteUseCase clienteUserCase){
         this.clienteUserCase = clienteUserCase;
+    }
+
+    @Operation(
+            description = "Retorna todos os clientes",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Clientes retornados com sucesso!")
+            }
+    )
+    @GetMapping(produces = "application/json")
+    public ResponseEntity<List<Cliente>> consultarTodosClientes() {
+        return ResponseEntity.ok(clienteUserCase.consultarTodosClientes());
     }
 
     @Operation(
@@ -31,7 +42,7 @@ public class ClienteController {
             }
     )
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody final Cliente cliente) throws Exception {
+    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody @Valid final Cliente cliente) {
         return ResponseEntity.status(HttpStatusCode.valueOf(201))
                 .body(clienteUserCase.salvarCliente(cliente));
     }
@@ -42,20 +53,32 @@ public class ClienteController {
                     @ApiResponse(responseCode = "200", description = "Cliente retornado com sucesso!")
             }
     )
-    @GetMapping(value = "/{cpf}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Cliente> consultarClientePorCpf(@PathVariable final String cpf) throws Exception {
+    @GetMapping(value = "/{cpf}", produces = "application/json")
+    public ResponseEntity<Cliente> consultarClientePorCpf(@PathVariable final String cpf) {
         return ResponseEntity.ok(clienteUserCase.consultarClientePorCpf(cpf));
     }
 
     @Operation(
-            description = "Retorna lista de clientes cadastrados no sistema",
+            description = "Atualiza um cliente atraves do codigo",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Clientes retornados com sucesso!")
+                    @ApiResponse(responseCode = "200", description = "Cliente atualizado com sucesso!")
             }
     )
-    @GetMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<List<Cliente>> consultarTodosClientes() {
-        return ResponseEntity.ok(clienteUserCase.consultarTodosClientes());
+    @PatchMapping(value = "/{codigo}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Cliente> atualizarClientePorCodigo(
+            @RequestBody @Valid final Cliente produto,
+            @PathVariable final Long codigo) {
+        return ResponseEntity.ok(clienteUserCase.atualizarCliente(produto, codigo));
     }
-
+    @Operation(
+            description = "Remove um cliente cadastrado pelo codigo",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Cliente removido com sucesso!")
+            }
+    )
+    @DeleteMapping(value = "/{codigo}", produces = "application/json")
+    public ResponseEntity<Object> removerClientePorCodigo(@PathVariable final Long codigo) {
+        clienteUserCase.deletarCliente(codigo);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -1,4 +1,4 @@
-package com.fiap.mssistemalanchonete.core.userCase.produto;
+package com.fiap.mssistemalanchonete.core.useCase.produto;
 
 import com.fiap.mssistemalanchonete.core.domain.error.exception.ProdutoAlreadyExistsException;
 import com.fiap.mssistemalanchonete.core.domain.error.exception.ProdutoNotFoundException;
@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProdutoUserCase {
+public class ProdutoUseCase {
 
     private final ProdutoPort produtoPort;
 
     @Autowired
-    public ProdutoUserCase(ProdutoPort produtoPort){
+    public ProdutoUseCase(ProdutoPort produtoPort){
         this.produtoPort = produtoPort;
     }
 

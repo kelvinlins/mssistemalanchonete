@@ -1,4 +1,4 @@
-package com.fiap.mssistemalanchonete.core.userCase.pedido;
+package com.fiap.mssistemalanchonete.core.useCase.pedido;
 
 import com.fiap.mssistemalanchonete.core.domain.error.exception.PedidoSemProdutosException;
 import com.fiap.mssistemalanchonete.core.domain.error.exception.QuantidadeInvalidaException;
@@ -6,8 +6,8 @@ import com.fiap.mssistemalanchonete.core.domain.error.exception.StatusInvalidoEx
 import com.fiap.mssistemalanchonete.core.domain.model.Combo;
 import com.fiap.mssistemalanchonete.core.domain.model.Pedido;
 import com.fiap.mssistemalanchonete.core.domain.model.StatusPedidoEnum;
-import com.fiap.mssistemalanchonete.core.userCase.cliente.ClienteUserCase;
-import com.fiap.mssistemalanchonete.core.userCase.produto.ProdutoUserCase;
+import com.fiap.mssistemalanchonete.core.useCase.cliente.ClienteUseCase;
+import com.fiap.mssistemalanchonete.core.useCase.produto.ProdutoUseCase;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,10 +16,10 @@ import java.util.Objects;
 
 @Component
 public class ValidacaoPedido {
-  private final ClienteUserCase clienteUserCase;
-  private final ProdutoUserCase produtoUserCase;
+  private final ClienteUseCase clienteUserCase;
+  private final ProdutoUseCase produtoUserCase;
 
-  public ValidacaoPedido(ClienteUserCase clienteUserCase, ProdutoUserCase produtoUserCase) {
+  public ValidacaoPedido(ClienteUseCase clienteUserCase, ProdutoUseCase produtoUserCase) {
     this.clienteUserCase = clienteUserCase;
     this.produtoUserCase = produtoUserCase;
   }
@@ -28,7 +28,6 @@ public class ValidacaoPedido {
     if (Objects.nonNull(pedido.getCliente())){
       clienteUserCase.consultarClientePorCodigo(pedido.getCliente().getCodigo());
     }
-
     validarCombos(pedido.getCombos());
   }
 
