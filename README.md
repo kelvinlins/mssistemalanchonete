@@ -11,7 +11,7 @@ Entretanto, recomendamos fortemente que você utilize o docker e o docker compos
 Caso ainda não os tenha instalado, visite a [documentação oficial do Docker](https://docs.docker.com/get-docker/) para obter instruções de instalação.
 
 ## Executando através do Docker Compose:
-
+Garanta que você está na branch `develop`.  
 Olhe para a pasta `./docker-compose` você encontrará tudo que é necessário para subir a aplicação utilizando docker compose (um yml e as enviroments referenciadas nele).  
 Basta, a partir de `./docker-compose`, no seu linux, executar :  
 ```
