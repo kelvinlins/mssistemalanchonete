@@ -1,8 +1,11 @@
 package com.fiap.mssistemalanchonete.adapter.in.controller;
 
+import com.fiap.mssistemalanchonete.core.domain.error.ErrorResponse;
 import com.fiap.mssistemalanchonete.core.domain.model.Produto;
 import com.fiap.mssistemalanchonete.core.userCase.produto.ProdutoUserCase;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -25,7 +28,10 @@ public class ProdutoController {
     @Operation(
             description = "Cria novo produto",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Produto criado com sucesso!")
+                    @ApiResponse(responseCode = "201", description = "Produto criado com sucesso!"),
+                    @ApiResponse(responseCode = "400",
+                      description = "Produto já posssui cadastro!",
+                      content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
             }
     )
     @PostMapping(consumes = "application/json", produces = "application/json")
@@ -38,7 +44,10 @@ public class ProdutoController {
     @Operation(
             description = "Atualiza um produto existente",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Produto atualizado com sucesso!")
+                    @ApiResponse(responseCode = "200", description = "Produto atualizado com sucesso!"),
+              @ApiResponse(responseCode = "404",
+                description = "Produto não encontrado!",
+                content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
             }
     )
     @PatchMapping(value = "/{codigo}", consumes = "application/json", produces = "application/json")
@@ -52,7 +61,10 @@ public class ProdutoController {
     @Operation(
             description = "Deleta produto por codigo",
             responses = {
-                    @ApiResponse(responseCode = "203", description = "Produtos deletado")
+                    @ApiResponse(responseCode = "204", description = "Produtos deletado"),
+              @ApiResponse(responseCode = "404",
+                description = "Produto não encontrado!",
+                content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
             }
     )
     @DeleteMapping(value = "/{codigo}", consumes = "application/json", produces = "application/json")
