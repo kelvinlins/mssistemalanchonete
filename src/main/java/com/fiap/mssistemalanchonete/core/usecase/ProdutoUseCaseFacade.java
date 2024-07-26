@@ -1,15 +1,21 @@
-package com.fiap.mssistemalanchonete.core.port;
+package com.fiap.mssistemalanchonete.core.usecase;
 
 import com.fiap.mssistemalanchonete.core.model.Produto;
 
 import java.util.List;
 
-public interface ProdutoPort {
+public interface ProdutoUseCaseFacade {
 
     Produto salvarProduto(Produto produto);
+
     List<Produto> consultarProdutoPorCategoria(String categoria);
+
+    Produto atualizarProduto(Produto produto, String codigo);
+
+    void deletarProduto(String codigo);
+
     List<Produto> consultarTodosProdutos();
-    Produto atualizarProduto(Produto produtoAntigo, Produto produtoNovo);
+
     Produto consultarProdutoPorCodigo(String codigo);
-    void deletarProduto(Produto produto);
+
 }

@@ -1,6 +1,6 @@
 package com.fiap.mssistemalanchonete.core.port;
 
-import com.fiap.mssistemalanchonete.core.domain.model.Cliente;
+import com.fiap.mssistemalanchonete.core.model.Cliente;
 
 import java.util.List;
 

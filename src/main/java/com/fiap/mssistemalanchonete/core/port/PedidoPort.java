@@ -1,7 +1,7 @@
 package com.fiap.mssistemalanchonete.core.port;
 
-import com.fiap.mssistemalanchonete.core.domain.model.Pedido;
-import com.fiap.mssistemalanchonete.core.domain.model.StatusPedidoEnum;
+import com.fiap.mssistemalanchonete.core.model.Pedido;
+import com.fiap.mssistemalanchonete.core.model.StatusPedidoEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
