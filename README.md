@@ -39,51 +39,49 @@
 
 ### Desenho de Arquitetura dos Requisitos do Negócio:
 
-Requisitos do Negócio
-
-Interface de Seleção de Produtos
-  Identificação do Cliente: Opções para identificação via CPF, cadastro com nome e e-mail, ou anonimato.
-  Montagem de Combo: Clientes podem montar combos de Lanche, Acompanhamento, Bebida.
-  Exibição de Produtos: Nome, descrição e preço de cada produto exibidos em cada etapa.
+- Interface de Seleção de Produtos
+  - Identificação do Cliente: Opções para identificação via CPF, cadastro com nome e e-mail, ou anonimato.
+  - Montagem de Combo: Clientes podem montar combos de Lanche, Acompanhamento, Bebida.
+  - Exibição de Produtos: Nome, descrição e preço de cada produto exibidos em cada etapa.
   
-Pagamento
-  Integração com Mercado Pago utilizando QRCode.
+- Pagamento
+  - Integração com Mercado Pago utilizando QRCode.
 
-Acompanhamento de Pedido
-  Monitor para clientes acompanharem o progresso do pedido com etapas: Recebido, Em preparação, Pronto, Finalizado.
+- Acompanhamento de Pedido
+  - Monitor para clientes acompanharem o progresso do pedido com etapas: Recebido, Em preparação, Pronto, Finalizado.
 
-Entrega
-  Notificação ao cliente quando o pedido estiver pronto para retirada.
-  Atualização do status do pedido para "Finalizado" quando retirado pelo cliente.
+- Entrega
+  - Notificação ao cliente quando o pedido estiver pronto para retirada.
+  - Atualização do status do pedido para "Finalizado" quando retirado pelo cliente.
 
-Acesso Administrativo
-  Gerenciamento de Clientes: Coletar dados dos clientes identificados para campanhas promocionais.
-  Gerenciamento de Produtos e Categorias: Gerenciar produtos com categorias fixas: Lanche, Acompanhamento, Bebida, Sobremesa.
-  Acompanhamento de Pedidos: Monitorar pedidos em andamento e tempo de espera.
+- Acesso Administrativo
+  - Gerenciamento de Clientes: Coletar dados dos clientes identificados para campanhas promocionais.
+  - Gerenciamento de Produtos e Categorias: Gerenciar produtos com categorias fixas: Lanche, Acompanhamento, Bebida, Sobremesa.
+  - Acompanhamento de Pedidos: Monitorar pedidos em andamento e tempo de espera.
 
-Componentes Principais:
-    Backend: Microsserviços para gerenciar autenticação, produtos, pedidos, pagamentos e notificações.
-    Banco de Dados: Armazenamento de dados de clientes, produtos, pedidos e histórico de transações.
-    Integração de Pagamentos: Serviço de integração com Mercado Pago.
-    Serviço de Notificações: Para notificar clientes sobre o status do pedido.
+### Componentes Principais:
+  - Backend: Microsserviços para gerenciar autenticação, produtos, pedidos, pagamentos e notificações.
+  - Banco de Dados: Armazenamento de dados de clientes, produtos, pedidos e histórico de transações.
+  - Integração de Pagamentos: Serviço de integração com Mercado Pago.
+  - Serviço de Notificações: Para notificar clientes sobre o status do pedido.
 
-Serviços e Ferramentas AWS:
-    Amazon EC2: Para hospedar os microsserviços.
-    Amazon RDS: Banco de dados relacional.
-    Network Load Balancer: Distribuição de tráfego para instâncias EC2.
-    Docker: Containerização dos microsserviços.
+### Serviços e Ferramentas AWS:
+  - Amazon EC2: Para hospedar os microsserviços.
+  - Amazon RDS: Banco de dados relacional.
+  - Network Load Balancer: Distribuição de tráfego para instâncias EC2.
+  - Docker: Containerização dos microsserviços.
 
-Descrição dos Componentes
+### Descrição dos Componentes
 
-Usuário: Interface do usuário para fazer pedidos, visualizar produtos, e acompanhar o status do pedido.
-Network Load Balancer: Distribui o tráfego de rede para as instâncias EC2, garantindo alta disponibilidade e balanceamento de carga.
-Amazon EC2 com Docker: Hospeda os microsserviços containerizados utilizando Docker
-Serviço de autenticação: Gerencia a autenticação e identificação dos clientes.
-Serviço de pedido: Gerencia os pedidos dos clientes, atualiza o status do pedido e coordena com outros serviços.
-Interface de pedido: Gerencia os produtos disponíveis para os clientes, incluindo nome, descrição, preço e categoria.
-Serviço de Pagamento: Integração com Mercado Pago para processar pagamentos via QRCode.
-Serviço de Notificação: Envia notificações aos clientes sobre o status do pedido 
-Amazon RDS: Banco de dados relacional para armazenar dados de clientes, produtos e pedidos.
+  - Usuário: Interface do usuário para fazer pedidos, visualizar produtos, e acompanhar o status do pedido.
+  - Network Load Balancer: Distribui o tráfego de rede para as instâncias EC2, garantindo alta disponibilidade e balanceamento de carga.
+  - Amazon EC2 com Docker: Hospeda os microsserviços containerizados utilizando Docker
+  - Serviço de autenticação: Gerencia a autenticação e identificação dos clientes.
+  - Serviço de pedido: Gerencia os pedidos dos clientes, atualiza o status do pedido e coordena com outros serviços.
+  - Interface de pedido: Gerencia os produtos disponíveis para os clientes, incluindo nome, descrição, preço e categoria.
+  - Serviço de Pagamento: Integração com Mercado Pago para processar pagamentos via QRCode.
+  - Serviço de Notificação: Envia notificações aos clientes sobre o status do pedido 
+  - Amazon RDS: Banco de dados relacional para armazenar dados de clientes, produtos e pedidos.
 
 ### Desenho de Arquitetura da Infraestrutura: 
 ![Diagrama - Arquitetura](https://github.com/user-attachments/assets/47b1b124-e7fe-47d2-bbe0-81a7937b3d91)
