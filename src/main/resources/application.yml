@@ -3,9 +3,9 @@ spring:
     name: mssistemalanchonete
   datasource:
     driverClassName: org.postgresql.Driver
-    password: 1234
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
   jpa:
     hibernate:
       ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
@@ -27,4 +27,3 @@ server:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
-
