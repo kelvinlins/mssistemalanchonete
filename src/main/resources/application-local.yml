@@ -5,7 +5,7 @@ spring:
     init:
       continue-on-error: true
   
-SPRING_DATASOURCE_USERNAME: user
-SPRING_DATASOURCE_PASSWORD: password
+SPRING_DATASOURCE_USERNAME: postgres
+SPRING_DATASOURCE_PASSWORD: 1234
 SPRING_JPA_HIBERNATE_DDL_AUTO: update
-SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/lanchonete
+SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres
