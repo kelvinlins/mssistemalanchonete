@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sistema-lanchonete-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sistema-lanchonete
+  template:
+    metadata:
+      labels:
+        app: sistema-lanchonete
+    spec:
+      containers:
+        - name: app-lanchonete
+          image: guimaj/sistema-lanchonete:latest
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgresfiap.ch2a4s0muanr.us-east-2.rds.amazonaws.com:5432/lanchonete
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-database
+                  key: password
+
