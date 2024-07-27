@@ -70,10 +70,20 @@ Componentes Principais:
 Serviços e Ferramentas AWS:
     Amazon EC2: Para hospedar os microsserviços.
     Amazon RDS: Banco de dados relacional.
-    Amazon SQS: Gerenciamento de filas para comunicação assíncrona.
-    Amazon SNS: Serviço de notificação.
-    Amazon S3: Armazenamento de imagens de produtos.
+    Network Load Balancer: Distribuição de tráfego para instâncias EC2.
+    Docker: Containerização dos microsserviços.
+
+Descrição dos Componentes
+
+Usuário: Interface do usuário para fazer pedidos, visualizar produtos, e acompanhar o status do pedido.
+Network Load Balancer: Distribui o tráfego de rede para as instâncias EC2, garantindo alta disponibilidade e balanceamento de carga.
+Amazon EC2 com Docker: Hospeda os microsserviços containerizados utilizando Docker
+Serviço de autenticação: Gerencia a autenticação e identificação dos clientes.
+Serviço de pedido: Gerencia os pedidos dos clientes, atualiza o status do pedido e coordena com outros serviços.
+Interface de pedido: Gerencia os produtos disponíveis para os clientes, incluindo nome, descrição, preço e categoria.
+Serviço de Pagamento: Integração com Mercado Pago para processar pagamentos via QRCode.
+Serviço de Notificação: Envia notificações aos clientes sobre o status do pedido 
+Amazon RDS: Banco de dados relacional para armazenar dados de clientes, produtos e pedidos.
 
 ### Desenho de Arquitetura da Infraestrutura: 
 ![Diagrama - Arquitetura](https://github.com/user-attachments/assets/47b1b124-e7fe-47d2-bbe0-81a7937b3d91)
-
