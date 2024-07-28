@@ -118,6 +118,11 @@ public class PedidoUseCase implements PedidoUseCaseFacade {
   }
 
   @Override
+  public Page<Pedido> listarPedidosOrdenadamente(Pageable pageable) throws Exception {
+    return pedidoPort.listarPedidosOrdenado(pageable);
+  }
+
+  @Override
   public Integer adicionarCombo(String codigoPedido, Pedido pedidoParaAtualizar) {
     var pedido = getPedidoPorCodigo(codigoPedido);
 

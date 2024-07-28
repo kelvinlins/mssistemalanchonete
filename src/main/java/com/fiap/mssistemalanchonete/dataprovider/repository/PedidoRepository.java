@@ -71,4 +71,9 @@ public class PedidoRepository implements PedidoPort {
           .toList();
         return pedidoMapper.toDomainPage(iPedidoRepository.findAllByStatusIn(statusNameList, pageable));
     }
+
+    @Override
+    public Page<Pedido> listarPedidosOrdenado(Pageable pageable) {
+        return pedidoMapper.toDomainPage(iPedidoRepository.findPedidosByEstadoAndOrderByFecha(pageable));
+    }
 }

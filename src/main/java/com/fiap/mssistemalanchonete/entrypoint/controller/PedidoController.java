@@ -230,6 +230,22 @@ public class PedidoController {
     }
 
     @Operation(
+            description = "Retorna uma page de pedidos ordenadamente",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Pedidos retornados com sucesso!")
+            }
+    )
+    @GetMapping(value = "/ordenados", produces = "application/json")
+    public ResponseEntity<Page<PedidoResponseDto>> consultarPedidosOrdenados(
+            @PageableDefault(size = 50, sort = {"horaCheckout"}) Pageable pageable) throws Exception {
+        return ResponseEntity.ok(
+                pedidoDtoMapper.toPagePedidoResponseDto(
+                        pedidoUseCaseFacade.listarPedidosOrdenadamente(pageable)
+                )
+        );
+    }
+
+    @Operation(
       description = "Retorna uma page de pedidos para acompanhamento dos clientes",
       responses = {
         @ApiResponse(responseCode = "200", description = "Pedidos retornados com sucesso!")

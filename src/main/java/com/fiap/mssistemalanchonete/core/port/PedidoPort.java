@@ -15,4 +15,7 @@ public interface PedidoPort {
     Optional<Pedido> consultarPedidoPorCodigo(String codigo);
     void deletarPedido(Pedido pedido);
     Page<Pedido> listarPedidos(Pageable pageable, List<StatusPedidoEnum> statusList);
+
+    Page<Pedido> listarPedidosOrdenado(Pageable pageable);
+
 }
