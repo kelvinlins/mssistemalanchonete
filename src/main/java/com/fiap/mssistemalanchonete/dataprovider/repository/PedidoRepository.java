@@ -5,7 +5,7 @@ import com.fiap.mssistemalanchonete.core.exception.exception.PedidoNotFoundExcep
 import com.fiap.mssistemalanchonete.dataprovider.mapper.PedidoMapper;
 import com.fiap.mssistemalanchonete.dataprovider.repository.jpa.IPedidoRepository;
 import com.fiap.mssistemalanchonete.core.model.Pedido;
-import com.fiap.mssistemalanchonete.core.model.StatusPedidoEnum;
+import com.fiap.mssistemalanchonete.core.enums.StatusPedidoEnum;
 import com.fiap.mssistemalanchonete.core.port.PedidoPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

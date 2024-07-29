@@ -1,12 +1,12 @@
 package com.fiap.mssistemalanchonete.core.usecase.pedido;
 
-import com.fiap.mssistemalanchonete.core.exception.exception.ClienteNotFoundException;
+import com.fiap.mssistemalanchonete.core.enums.StatusPagamentoEnum;
 import com.fiap.mssistemalanchonete.core.exception.exception.ComboNotFoundException;
 import com.fiap.mssistemalanchonete.core.exception.exception.PedidoNotFoundException;
 import com.fiap.mssistemalanchonete.core.model.Combo;
 import com.fiap.mssistemalanchonete.core.model.Pedido;
 import com.fiap.mssistemalanchonete.core.model.Produto;
-import com.fiap.mssistemalanchonete.core.model.StatusPedidoEnum;
+import com.fiap.mssistemalanchonete.core.enums.StatusPedidoEnum;
 import com.fiap.mssistemalanchonete.core.port.PedidoPort;
 import com.fiap.mssistemalanchonete.core.usecase.PedidoUseCaseFacade;
 import com.fiap.mssistemalanchonete.core.validation.pedido.PedidoValidation;
@@ -38,7 +38,7 @@ public class PedidoUseCase implements PedidoUseCaseFacade {
   public Pedido criarPedido(Pedido pedido) throws Exception {
     validation.validarPedido(pedido);
     pedido.setCodigo(UUID.randomUUID().toString());
-    pedido.setStatus(StatusPedidoEnum.INICIADO);
+    pedido.setStatus(StatusPedidoEnum.AGUARDANDO_PAGAMENTO);
     pedido.setCombos(List.of(Combo.builder().id(1).build()));
     return pedidoPort.salvarPedido(pedido);
   }
@@ -165,7 +165,7 @@ public class PedidoUseCase implements PedidoUseCaseFacade {
   public Pedido checkout(String codigoPedido) {
     var pedido = getPedidoPorCodigo(codigoPedido);
 
-    validation.validarStatusAlteracaoCombo(pedido);
+    validation.validarStatusPedidoPago(pedido);
     validation.validarQuePedidoTemProdutos(pedido);
 
     pedido.getCombos().removeIf(Combo::semProdutos);
@@ -173,6 +173,16 @@ public class PedidoUseCase implements PedidoUseCaseFacade {
     pedido.setStatus(StatusPedidoEnum.RECEBIDO);
 
     return pedidoPort.atualizarPedido(pedido);
+  }
+
+  @Override
+  public StatusPagamentoEnum getStatusPagamento(String codigoPedido) {
+    Pedido pedido = pedidoPort.consultarPedidoPorCodigo(codigoPedido);
+
+    if (ObjectUtils.isEmpty(pedido))
+      throw new PedidoNotFoundException();
+
+    return pedido.getStatus().equals(StatusPedidoEnum.AGUARDANDO_PAGAMENTO) ? StatusPagamentoEnum.NEGADO : StatusPagamentoEnum.APROVADO;
   }
 
   @Override

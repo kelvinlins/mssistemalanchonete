@@ -1,11 +1,12 @@
 package com.fiap.mssistemalanchonete.core.validation.pedido;
 
+import com.fiap.mssistemalanchonete.core.exception.exception.PedidoAguardandoPagamentoException;
 import com.fiap.mssistemalanchonete.core.exception.exception.PedidoSemProdutosException;
 import com.fiap.mssistemalanchonete.core.exception.exception.QuantidadeInvalidaException;
 import com.fiap.mssistemalanchonete.core.exception.exception.StatusInvalidoException;
 import com.fiap.mssistemalanchonete.core.model.Combo;
 import com.fiap.mssistemalanchonete.core.model.Pedido;
-import com.fiap.mssistemalanchonete.core.model.StatusPedidoEnum;
+import com.fiap.mssistemalanchonete.core.enums.StatusPedidoEnum;
 import com.fiap.mssistemalanchonete.core.usecase.cliente.ClienteUseCase;
 import com.fiap.mssistemalanchonete.core.usecase.produto.ProdutoUseCase;
 import org.springframework.stereotype.Component;
@@ -67,8 +68,14 @@ public class PedidoValidation {
     }
 
     public void validarStatusAlteracaoCombo(Pedido pedido) {
-        if (!StatusPedidoEnum.INICIADO.equals(pedido.getStatus())){
+        if (!StatusPedidoEnum.AGUARDANDO_PAGAMENTO.equals(pedido.getStatus())){
             throw new StatusInvalidoException();
+        }
+    }
+
+    public void validarStatusPedidoPago(Pedido pedido) {
+        if (!StatusPedidoEnum.PAGO.equals(pedido.getStatus())){
+            throw new PedidoAguardandoPagamentoException();
         }
     }
 

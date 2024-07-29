@@ -1,4 +1,4 @@
-package com.fiap.mssistemalanchonete.core.model;
+package com.fiap.mssistemalanchonete.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +9,12 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public enum StatusPedidoEnum {
-  INICIADO(Boolean.FALSE),
   AGUARDANDO_PAGAMENTO(Boolean.FALSE),
   RECEBIDO(Boolean.TRUE),
   EM_PREPARACAO(Boolean.TRUE),
   PRONTO(Boolean.TRUE),
-  FINALIZADO(Boolean.FALSE);
+  FINALIZADO(Boolean.FALSE),
+  PAGO(Boolean.FALSE);
 
   private final Boolean acompanhar;
 
@@ -23,5 +23,4 @@ public enum StatusPedidoEnum {
       .filter(statusPedidoEnum -> Boolean.TRUE.equals(statusPedidoEnum.getAcompanhar()))
       .toList();
   }
-
 }
