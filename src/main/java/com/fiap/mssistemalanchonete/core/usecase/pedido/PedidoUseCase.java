@@ -1,5 +1,6 @@
 package com.fiap.mssistemalanchonete.core.usecase.pedido;
 
+import com.fiap.mssistemalanchonete.core.exception.exception.ClienteNotFoundException;
 import com.fiap.mssistemalanchonete.core.exception.exception.ComboNotFoundException;
 import com.fiap.mssistemalanchonete.core.exception.exception.PedidoNotFoundException;
 import com.fiap.mssistemalanchonete.core.model.Combo;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -46,6 +48,11 @@ public class PedidoUseCase implements PedidoUseCaseFacade {
     getPedidoPorCodigo(codigo);
     pedido.setCodigo(codigo);
     return pedidoPort.atualizarPedido(pedido);
+  }
+
+  @Override
+  public Page<Pedido> listarPedidos(Pageable pageable) throws Exception {
+    return pedidoPort.listarPedidos(pageable);
   }
 
   @Override
@@ -113,8 +120,8 @@ public class PedidoUseCase implements PedidoUseCaseFacade {
   }
 
   @Override
-  public Page<Pedido> listarPedidos(Pageable pageable, List<StatusPedidoEnum> status) {
-    return pedidoPort.listarPedidos(pageable, status);
+  public Page<Pedido> listarPedidosPorStatus(Pageable pageable, List<StatusPedidoEnum> status) {
+    return pedidoPort.listarPedidosPorStatus(pageable, status);
   }
 
   @Override
@@ -139,7 +146,13 @@ public class PedidoUseCase implements PedidoUseCaseFacade {
 
   @Override
   public Pedido getPedidoPorCodigo(String codigoPedido) {
-    return null;
+
+    Pedido pedido = pedidoPort.consultarPedidoPorCodigo(codigoPedido);
+
+    if (ObjectUtils.isEmpty(pedido))
+      throw new PedidoNotFoundException();
+
+    return pedido;
   }
 
   private static Combo getComboParaAdiconar(Pedido pedidoParaAtualizar) {
