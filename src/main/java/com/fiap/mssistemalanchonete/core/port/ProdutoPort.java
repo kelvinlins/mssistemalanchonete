@@ -5,7 +5,6 @@ import com.fiap.mssistemalanchonete.core.model.Produto;
 import java.util.List;
 
 public interface ProdutoPort {
-
     Produto salvarProduto(Produto produto);
     List<Produto> consultarProdutoPorCategoria(String categoria);
     List<Produto> consultarTodosProdutos();

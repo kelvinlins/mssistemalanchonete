@@ -1,7 +1,8 @@
 package com.fiap.mssistemalanchonete.core.usecase;
 
+import com.fiap.mssistemalanchonete.core.enums.StatusPagamentoEnum;
 import com.fiap.mssistemalanchonete.core.model.Pedido;
-import com.fiap.mssistemalanchonete.core.model.StatusPedidoEnum;
+import com.fiap.mssistemalanchonete.core.enums.StatusPedidoEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -30,5 +31,7 @@ public interface PedidoUseCaseFacade {
     void deletarCombo(String codigoPedido, Integer comboId) throws Exception;
 
     Pedido checkout(String codigoPedido) throws Exception;
+
+    StatusPagamentoEnum getStatusPagamento(String codigoPedido);
 
 }

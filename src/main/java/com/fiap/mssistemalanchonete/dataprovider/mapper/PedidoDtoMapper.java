@@ -1,16 +1,7 @@
 package com.fiap.mssistemalanchonete.dataprovider.mapper;
 
-import com.fiap.mssistemalanchonete.entrypoint.dto.AcompanhamentoClienteResponseDto;
-import com.fiap.mssistemalanchonete.entrypoint.dto.AcompanhamentoCozinhaResponseDto;
-import com.fiap.mssistemalanchonete.entrypoint.dto.AdicionarProdutoRequestDto;
-import com.fiap.mssistemalanchonete.entrypoint.dto.AtualizaPedidoRequestDto;
-import com.fiap.mssistemalanchonete.entrypoint.dto.ComboAcompanhamentoCozinhaDto;
-import com.fiap.mssistemalanchonete.entrypoint.dto.ComboDto;
-import com.fiap.mssistemalanchonete.entrypoint.dto.CriarComboRequestDto;
-import com.fiap.mssistemalanchonete.entrypoint.dto.CriarPedidoRequestDto;
-import com.fiap.mssistemalanchonete.entrypoint.dto.ItemComboAcompanhamentoCozinhaDto;
-import com.fiap.mssistemalanchonete.entrypoint.dto.ItemComboDto;
-import com.fiap.mssistemalanchonete.entrypoint.dto.PedidoResponseDto;
+import com.fiap.mssistemalanchonete.core.enums.StatusPagamentoEnum;
+import com.fiap.mssistemalanchonete.entrypoint.dto.*;
 import com.fiap.mssistemalanchonete.core.model.Cliente;
 import com.fiap.mssistemalanchonete.core.model.Combo;
 import com.fiap.mssistemalanchonete.core.model.Pedido;
@@ -70,7 +61,7 @@ public interface PedidoDtoMapper {
 
   default Page<AcompanhamentoClienteResponseDto> toAcompanhamentoClienteResponse(Page<Pedido> pedidos){
     return pedidos.map(this::toAcompanhamentoClienteResponse);
-  };
+  }
 
   @Mapping(target = "tempoEspera", expression = "java(pedido.getTempoEspera())")
   AcompanhamentoClienteResponseDto toAcompanhamentoClienteResponse(Pedido pedido);
@@ -99,7 +90,7 @@ public interface PedidoDtoMapper {
       )
     );
     return new ComboAcompanhamentoCozinhaDto(combo.getId(),itensDto);
-  };
+  }
 
   default ComboDto toComboDto(Combo combo){
     if (Objects.isNull(combo)){
@@ -121,9 +112,13 @@ public interface PedidoDtoMapper {
       );
     }
     return new ComboDto(combo.getId(), itensDto, combo.getSubTotal());
-  };
+  }
 
   default Page<PedidoResponseDto> toPagePedidoResponseDto(Page<Pedido> pedidos){
     return pedidos.map(this::toPedidoResponseDto);
-  };
+  }
+
+  default StatusPagamentoDto toStatusPagamentoDto(StatusPagamentoEnum statusPagamentoEnum){
+    return new StatusPagamentoDto(statusPagamentoEnum.name());
+  }
 }

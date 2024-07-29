@@ -2,7 +2,7 @@ package com.fiap.mssistemalanchonete.entrypoint.controller;
 
 import com.fiap.mssistemalanchonete.core.exception.ErrorResponse;
 import com.fiap.mssistemalanchonete.core.model.Pedido;
-import com.fiap.mssistemalanchonete.core.model.StatusPedidoEnum;
+import com.fiap.mssistemalanchonete.core.enums.StatusPedidoEnum;
 import com.fiap.mssistemalanchonete.core.usecase.PedidoUseCaseFacade;
 import com.fiap.mssistemalanchonete.dataprovider.mapper.PedidoDtoMapper;
 import com.fiap.mssistemalanchonete.entrypoint.dto.*;
@@ -20,7 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -256,16 +255,30 @@ public class PedidoController {
 
 
     @Operation(
-      description = "Finaliza pedido",
+      description = "Consulta status de pagamento do pedido",
       responses = {
-        @ApiResponse(responseCode = "201", description = "Combo criado com sucesso!"),
-        @ApiResponse(responseCode = "406",
-          description = "Status do Pedido não permite alteração!",
-          content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "200", description = "Combo criado com sucesso!"),
         @ApiResponse(responseCode = "404",
           description = "Pedido não encontrado!",
           content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
       }
+    )
+    @GetMapping(value = "/{codigoPedido}/pagamento", produces = "application/json")
+    public ResponseEntity<StatusPagamentoDto> consultarStatusPagamento(@PathVariable final String codigoPedido) throws Exception {
+        return ResponseEntity.ok(pedidoDtoMapper.toStatusPagamentoDto(pedidoUseCaseFacade.getStatusPagamento(codigoPedido)));
+    }
+
+    @Operation(
+            description = "Finaliza pedido",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Combo criado com sucesso!"),
+                    @ApiResponse(responseCode = "406",
+                            description = "Status do Pedido não permite alteração!",
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                    @ApiResponse(responseCode = "404",
+                            description = "Pedido não encontrado!",
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            }
     )
     @PostMapping(value = "/{codigoPedido}/checkout", produces = "application/json")
     public ResponseEntity<PedidoResponseDto> checkout(@PathVariable final String codigoPedido) throws Exception {

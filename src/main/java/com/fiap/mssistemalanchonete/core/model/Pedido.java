@@ -1,5 +1,6 @@
 package com.fiap.mssistemalanchonete.core.model;
 
+import com.fiap.mssistemalanchonete.core.enums.StatusPedidoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
