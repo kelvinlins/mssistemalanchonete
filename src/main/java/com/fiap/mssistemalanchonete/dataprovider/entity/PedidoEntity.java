@@ -24,7 +24,7 @@ import java.util.List;
 public class PedidoEntity {
 
     @Id
-    @Column(name="codigoPedido")
+    @Column(name="codigo_pedido")
     private String codigo;
 
     @JoinColumn(name = "codigoCliente", nullable = true)
@@ -37,9 +37,9 @@ public class PedidoEntity {
     @Column(name = "desconto")
     private BigDecimal desconto;
 
-    @Column(name = "statusPedido", nullable = false)
+    @Column(name = "status_pedido", nullable = false)
     private String status;
 
-    @Column
+    @Column(name = "hora_checkout")
     LocalDateTime horaCheckout;
 }

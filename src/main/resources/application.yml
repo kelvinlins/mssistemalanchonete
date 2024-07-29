@@ -3,8 +3,8 @@ spring:
     name: mssistemalanchonete
   datasource:
     driverClassName: org.postgresql.Driver
-    password: Admin321
-    url: jdbc:postgresql://postgresfiap.ch2a4s0muanr.us-east-2.rds.amazonaws.com:5432/lanchonete
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
   jpa:
     hibernate:

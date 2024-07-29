@@ -14,15 +14,13 @@ import java.util.Optional;
 public interface IPedidoRepository extends JpaRepository<PedidoEntity, String> {
 
   Optional<PedidoEntity> findByCodigo(String codigo);
-
   Page<PedidoEntity> findAllByStatusIn(List<String> statusList, Pageable pageable);
-
-  @Query("SELECT p FROM pedido p WHERE p.status != 'finalizado' ORDER BY " +
+  @Query("SELECT p FROM pedido p WHERE p.status != 'FINALIZADO' ORDER BY " +
           "CASE p.status " +
-          "  WHEN 'pronto' THEN 1 " +
-          "  WHEN 'em preparação' THEN 2 " +
-          "  WHEN 'recebido' THEN 3 " +
+          "  WHEN 'PRONTO' THEN 1 " +
+          "  WHEN 'EM_PREPARACAO' THEN 2 " +
+          "  WHEN 'RECEBIDO' THEN 3 " +
           "END, p.horaCheckout ASC")
-  Page<PedidoEntity> findPedidosByEstadoAndOrderByFecha(Pageable pageable);
+  Page<PedidoEntity> findAllWithoutFinished(Pageable pageable);
 
 }

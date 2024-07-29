@@ -18,6 +18,6 @@ class ComboEntityId {
   private Integer id;
 
   @ManyToOne
-  @JoinColumn(name = "codigoPedido", referencedColumnName = "codigoPedido")
+  @JoinColumn(name = "codigo_pedido", referencedColumnName = "codigo_pedido")
   private PedidoEntity pedido;
 }

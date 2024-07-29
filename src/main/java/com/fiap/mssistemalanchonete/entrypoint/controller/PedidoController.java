@@ -223,25 +223,8 @@ public class PedidoController {
     public ResponseEntity<Page<PedidoResponseDto>> consultarPedidos(
       @PageableDefault(size = 50, sort = {"horaCheckout"}) Pageable pageable) throws Exception {
         return ResponseEntity.ok(
-          pedidoDtoMapper.toPagePedidoResponseDto(
-                  pedidoUseCaseFacade.listarPedidos(pageable, List.of(StatusPedidoEnum.values()))
+          pedidoDtoMapper.toPagePedidoResponseDto(pedidoUseCaseFacade.listarPedidos(pageable)
           )
-        );
-    }
-
-    @Operation(
-            description = "Retorna uma page de pedidos ordenadamente",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Pedidos retornados com sucesso!")
-            }
-    )
-    @GetMapping(value = "/ordenados", produces = "application/json")
-    public ResponseEntity<Page<PedidoResponseDto>> consultarPedidosOrdenados(
-            @PageableDefault(size = 50, sort = {"horaCheckout"}) Pageable pageable) throws Exception {
-        return ResponseEntity.ok(
-                pedidoDtoMapper.toPagePedidoResponseDto(
-                        pedidoUseCaseFacade.listarPedidosOrdenadamente(pageable)
-                )
         );
     }
 
@@ -254,7 +237,7 @@ public class PedidoController {
     @GetMapping(value = "/acompanhamento-cliente", produces = "application/json")
     public ResponseEntity<Page<AcompanhamentoClienteResponseDto>> acompanharPedidosCliente(
       @PageableDefault(size = 50, sort = {"horaCheckout"}) Pageable pageable) throws Exception {
-        Page<Pedido> pedidos = pedidoUseCaseFacade.listarPedidos(pageable, StatusPedidoEnum.getStatusAcompanhar());
+        Page<Pedido> pedidos = pedidoUseCaseFacade.listarPedidosPorStatus(pageable, StatusPedidoEnum.getStatusAcompanhar());
         return ResponseEntity.ok(pedidoDtoMapper.toAcompanhamentoClienteResponse(pedidos));
     }
 
@@ -267,7 +250,7 @@ public class PedidoController {
     @GetMapping(value = "/acompanhamento-cozinha", produces = "application/json")
     public ResponseEntity<Page<AcompanhamentoCozinhaResponseDto>> acompanharPedidosCozinha(
       @PageableDefault(size = 50, sort = {"horaCheckout"}) Pageable pageable) throws Exception {
-        Page<Pedido> pedidos = pedidoUseCaseFacade.listarPedidos(pageable, StatusPedidoEnum.getStatusAcompanhar());
+        Page<Pedido> pedidos = pedidoUseCaseFacade.listarPedidosPorStatus(pageable, StatusPedidoEnum.getStatusAcompanhar());
         return ResponseEntity.ok(pedidoDtoMapper.toAcompanhamentoCozinhaResponse(pedidos));
     }
 
@@ -285,9 +268,8 @@ public class PedidoController {
       }
     )
     @PostMapping(value = "/{codigoPedido}/checkout", produces = "application/json")
-    public ResponseEntity checkout( @PathVariable final String codigoPedido) throws Exception {
-        pedidoUseCaseFacade.checkout(codigoPedido);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<PedidoResponseDto> checkout(@PathVariable final String codigoPedido) throws Exception {
+        return ResponseEntity.ok(pedidoDtoMapper.toPedidoResponseDto(pedidoUseCaseFacade.checkout(codigoPedido)));
     }
 
 }

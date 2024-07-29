@@ -13,15 +13,15 @@ public interface PedidoUseCaseFacade {
 
     Pedido atualizarPedido(Pedido pedido, String codigo) throws Exception;
 
+    Page<Pedido> listarPedidos(Pageable pageable) throws Exception;
+
     void deletarPedido(String codigo) throws Exception;
 
     Pedido adicionarProdutos(String codigoPedido, Integer codigoCombo, String codigoProduto, Integer quantidade) throws Exception;
 
     Pedido removerProduto(String codigoPedido, Integer comboId, String codigoProduto, Integer quantidade) throws Exception;
 
-    Page<Pedido> listarPedidos(Pageable pageable, List<StatusPedidoEnum> status) throws Exception;
-
-    Page<Pedido> listarPedidosOrdenadamente(Pageable pageable) throws Exception;
+    Page<Pedido> listarPedidosPorStatus(Pageable pageable, List<StatusPedidoEnum> status) throws Exception;
 
     Integer adicionarCombo(String codigoPedido, Pedido pedidoParaAtualizar) throws Exception;
 

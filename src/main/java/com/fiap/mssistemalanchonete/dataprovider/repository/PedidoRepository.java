@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Repository
 public class PedidoRepository implements PedidoPort {
@@ -54,9 +53,10 @@ public class PedidoRepository implements PedidoPort {
     }
 
     @Override
-    public Optional<Pedido> consultarPedidoPorCodigo(String codigo) {
-        var pedidoEntity = iPedidoRepository.findById(codigo);
-        return pedidoMapper.toDomain(pedidoEntity);
+    public Pedido consultarPedidoPorCodigo(String codigo) {
+        return iPedidoRepository.findById(codigo)
+                .map(pedidoMapper::toDomain)
+                .orElse(null);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class PedidoRepository implements PedidoPort {
     }
 
     @Override
-    public Page<Pedido> listarPedidos(Pageable pageable, List<StatusPedidoEnum> statusList) {
+    public Page<Pedido> listarPedidosPorStatus(Pageable pageable, List<StatusPedidoEnum> statusList) {
         List<String> statusNameList = statusList.stream()
           .map(StatusPedidoEnum::name)
           .toList();
@@ -73,7 +73,8 @@ public class PedidoRepository implements PedidoPort {
     }
 
     @Override
-    public Page<Pedido> listarPedidosOrdenado(Pageable pageable) {
-        return pedidoMapper.toDomainPage(iPedidoRepository.findPedidosByEstadoAndOrderByFecha(pageable));
+    public Page<Pedido> listarPedidos(Pageable pageable) {
+        Page<PedidoEntity> pedidoEntityPage = iPedidoRepository.findAllWithoutFinished(pageable);
+        return pedidoMapper.toDomainPage(pedidoEntityPage);
     }
 }
