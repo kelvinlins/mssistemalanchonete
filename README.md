@@ -4,10 +4,10 @@
   Esta aplicação é o backend de um sistema de controle de pedidos e auto-atendimento para uma lanchonete. Nela é possível cadastrar clientes, produtos e pedidos bem como gerenciar seu ciclo de vida.  
   Ela foi contruída usando arquitetura hexagonal, java 17 e spring-boot 3.
 
-## Pré-Requisitos
-  Para rodar essa aplicação você precisa de um banco de dados postgres, de java 17 e do maven.  
-  Entretanto, recomendamos fortemente que você utilize o docker e o docker compose para facilitar esse processo (nós criamos um docker-compose.yml :wink: ). 
-  Caso ainda não os tenha instalado, visite a [documentação oficial do Docker](https://docs.docker.com/get-docker/) para obter instruções de instalação.
+## Exeutando via Kubernetes (Minikube)
+  Estando na branch `develop` entre no diretorio `./k8s` e execute o script `./apply-manifests`, nele se encontram todos os manifestos criados para o deploy da app.   
+  Após a execução do script e os manifestos criados, execute o comando `minikube service <service_name>` utilizando o nome do seu service criado. 
+  Utilize a `URL` retornada para o consumo da aplicação.
 
 ## Executando através do Docker Compose:
   Garanta que você está na branch `develop`.  
