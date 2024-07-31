@@ -14,7 +14,7 @@
 
 ## Executando através do Docker Compose:
   Garanta que você está na branch `develop`.  
-  Olhe para a pasta `./docker-compose` você encontrará tudo que é necessário para subir a aplicação utilizando docker compose (um yml e as enviroments referenciadas nele).  
+  Olhe para a pasta `./docker-compose` você encontrará tudo que é necessário para subir a aplicação utilizando docker compose (*yml e as enviroments referenciadas nele*).  
   Basta, a partir de `./docker-compose`, no seu linux, executar :  
   ```
   docker compose up
@@ -22,6 +22,12 @@
 
 ## Contrato
   Com aplicação rodando, acesse o endpoint `/sistema-lanchonete/api/v1/swagger-ui/index.html` e você terá o detalhamento dos endpoints expostos na aplicação.
+
+## Collection (Postman)
+  Importar a collection `MSLanchonete.postman_collection.json` localizada no diretório raiz do projeto para utilização dos endpoints da aplicação.
+
+  **OBS**: Para o funcionamento das requests é necessário alterar a variável de ambiente chamada `host` da collection para utilizar o valor do seu respectivo host, caso esteja usando app através do Kubernetes(*Minikube*) utilizar como `host` a URL fornecida pelo mesmo, conforme mostrado no exemplo da execução via Kubernetes. Caso contrário utilizar como host `http://localhost:8080`.  
+  
 
 ## A aplicação
   Conforme escrito anteriormente, podemos gerenciar clientes, produtos e pedidos.
