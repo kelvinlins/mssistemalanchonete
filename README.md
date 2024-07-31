@@ -8,7 +8,9 @@
   Estando na branch `develop` entre no diretorio `./k8s` e execute o script `./apply-manifests`, nele se encontram todos os manifestos criados para o deploy da app.   
   Após a execução do script e os manifestos criados, execute o comando `minikube service <service_name>` utilizando o nome do seu service criado. 
   
-  Utilize a `URL` retornada para o consumo da aplicação.
+  Utilize a `URL` retornada para o consumo da aplicação - (Exemplo abaixo). 
+  
+  ![Exemplo]([https://github.com/user-attachments/assets/47b1b124-e7fe-47d2-bbe0-81a7937b3d91](https://github.com/kelvinlins/mssistemalanchonete/blob/develop/assets/exemplo-minikube-service.png))
 
 ## Executando através do Docker Compose:
   Garanta que você está na branch `develop`.  
