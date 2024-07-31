@@ -18,7 +18,7 @@
   ```
 
 ## Contrato
-  Com aplicação rodando, acesse `http://localhost:8080/sistema-lanchonete/api/v1/swagger-ui/index.html` e você terá o detalhamento dos endpoints expostos na aplicação.
+  Com aplicação rodando, acesse o endpoint `/sistema-lanchonete/api/v1/swagger-ui/index.html` e você terá o detalhamento dos endpoints expostos na aplicação.
 
 ## A aplicação
   Conforme escrito anteriormente, podemos gerenciar clientes, produtos e pedidos.
@@ -85,3 +85,7 @@
 
 ### Desenho de Arquitetura da Infraestrutura: 
 ![Diagrama - Arquitetura](https://github.com/user-attachments/assets/47b1b124-e7fe-47d2-bbe0-81a7937b3d91)
+
+### Video explicativo - Fase 2
+Segue o link abaixo para o video explicativo detalhando o funcionamento da aplicação na arquitetura escolhida pelo grupo 
+[Link para o video:](https://www.youtube.com/watch?v=aRSbvq5WTiY)
