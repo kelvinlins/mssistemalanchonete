@@ -96,7 +96,7 @@
 ![Diagrama - Arquitetura](https://github.com/user-attachments/assets/47b1b124-e7fe-47d2-bbe0-81a7937b3d91)
 
 ### Fluxograma da Aplicação: 
-![Fluxograma - Aplicação]([https://github.com/user-attachments/assets/47b1b124-e7fe-47d2-bbe0-81a7937b3d91](https://github.com/kelvinlins/mssistemalanchonete/blob/6034b4e98b6e760decd333cbb49c60730885aada/assets/Fluxograma-app.jpg))
+![Fluxograma - Aplicação](https://github.com/kelvinlins/mssistemalanchonete/blob/6034b4e98b6e760decd333cbb49c60730885aada/assets/Fluxograma-app.jpg)
 
 ### Video explicativo - Fase 2
 Segue o [video](https://www.youtube.com/watch?v=aRSbvq5WTiY) explicativo da fase 2 detalhando o funcionamento da aplicação na arquitetura escolhida pelo grupo. 
