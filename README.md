@@ -5,7 +5,7 @@
   Ela foi contruída usando arquitetura hexagonal, java 17 e spring-boot 3.
 
 ## Executando via Kubernetes (Minikube)
-  Estando na branch `develop` entre no diretorio `./k8s` e execute o script `./apply-manifests`, nele se encontram todos os manifestos criados para o deploy da app.   
+  Estando na branch `develop` entre no diretorio `./k8s` e execute o script `./apply-manifests.sh`, nele se encontram todos os manifestos criados para o deploy da app.   
   Após a execução do script e os manifestos criados, execute o comando `minikube service <service_name>` utilizando o nome do seu service criado. 
   
   Utilize a `URL` retornada para o consumo da aplicação - *Exemplo abaixo*. 
