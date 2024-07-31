@@ -1,0 +1,1725 @@
+{
+	"info": {
+		"_postman_id": "4ad113ef-2b6d-4d4b-b7e8-32e5ee92a047",
+		"name": "MSLanchonete",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cria os produtos antes do cliente iniciar o fluxo",
+			"item": [
+				{
+					"name": "criar lanche",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let codigo = pm.response.json().codigo;\r",
+									"\r",
+									"pm.collectionVariables.set(\"lanche\", codigo);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": \"lanche1\",\r\n  \"nome\": \"x-tudo\",\r\n  \"descricao\": \"Tudo que tiver na geladeira desntro do pão\",\r\n  \"preco\": 19.99,\r\n  \"categoria\": \"LANCHE\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/sistema-lanchonete/api/v1/produtos",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "criar bebida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let codigo = pm.response.json().codigo;\r",
+									"\r",
+									"pm.collectionVariables.set(\"bebida\", codigo);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": \"bebida1\",\r\n  \"nome\": \"refri gelado\",\r\n  \"descricao\": \"refrigerante geladinho\",\r\n  \"preco\": 9.99,\r\n  \"categoria\": \"BEBIDA\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/sistema-lanchonete/api/v1/produtos",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "criar acompanhamento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let codigo = pm.response.json().codigo;\r",
+									"\r",
+									"pm.collectionVariables.set(\"acompanhamento\", codigo);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": \"acomp1\",\r\n  \"nome\": \"batata\",\r\n  \"descricao\": \"batata frita\",\r\n  \"preco\": 2.99,\r\n  \"categoria\": \"ACOMPANHAMENTO\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/sistema-lanchonete/api/v1/produtos",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "criar sobremesa",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let codigo = pm.response.json().codigo;\r",
+									"\r",
+									"pm.collectionVariables.set(\"sobremesa\", codigo);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": \"sobre1\",\r\n  \"nome\": \"sorvete\",\r\n  \"descricao\": \"sorvete top\",\r\n  \"preco\": 0.99,\r\n  \"categoria\": \"SOBREMESA\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/sistema-lanchonete/api/v1/produtos",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Quando o cliente não se registra",
+			"item": [
+				{
+					"name": "Criar pedido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let codigo = pm.response.json().codigo;\r",
+									"console.log(codigo)\r",
+									"pm.collectionVariables.set(\"codigoPedido\", codigo);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"codigoCliente\": null\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "adicionarProdutos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"codigoProduto\": \"{{lanche}}\",\n  \"quantidade\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido/combos/:comboId/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido",
+								"combos",
+								":comboId",
+								"produtos"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								},
+								{
+									"key": "comboId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "adicionar Combo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"itens\": [\n        {\n            \"codigoProduto\": \"{{lanche}}\",\n            \"quantidade\": 2\n        },\n        {\n            \"codigoProduto\": \"{{bebida}}\",\n            \"quantidade\": 1\n        },\n        {\n            \"codigoProduto\": \"{{acompanhamento}}\",\n            \"quantidade\": 1\n        },{\n            \"codigoProduto\": \"{{sobremesa}}\",\n            \"quantidade\": 1\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido/combos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido",
+								"combos"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consultar Pedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remover produto",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantidade\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido/combos/:comboId/produtos/:codigoProduto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido",
+								"combos",
+								":comboId",
+								"produtos",
+								":codigoProduto"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								},
+								{
+									"key": "comboId",
+									"value": "2"
+								},
+								{
+									"key": "codigoProduto",
+									"value": "{{lanche}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletar Combo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido/combos/:comboId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido",
+								"combos",
+								":comboId"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								},
+								{
+									"key": "comboId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consultar Pedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "realizar pagamento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "checkout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido/checkout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido",
+								"checkout"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "acompanhamento cliente",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/acompanhamento-cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								"acompanhamento-cliente"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "string",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "acompanhamento cozinha",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/acompanhamento-cozinha",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								"acompanhamento-cozinha"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "string",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listarPedidos  antes de finalizar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar pedido",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"FINALIZADO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listarPedidos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Quando o cliente se registra",
+			"item": [
+				{
+					"name": "Cliente se identifica",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let codigo = pm.response.json().codigo;\r",
+									"console.log(codigo)\r",
+									"pm.collectionVariables.set(\"codigoClientePedido\", codigo);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cpf\": \"214.350.650-34\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar pedido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let codigo = pm.response.json().codigo;\r",
+									"console.log(codigo)\r",
+									"pm.collectionVariables.set(\"codigoPedido\", codigo);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"codigoCliente\": {{codigoClientePedido}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "adicionarProdutos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"codigoProduto\": \"{{lanche}}\",\n  \"quantidade\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido/combos/:comboId/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido",
+								"combos",
+								":comboId",
+								"produtos"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								},
+								{
+									"key": "comboId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "adicionar Combo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"itens\": [\n        {\n            \"codigoProduto\": \"{{lanche}}\",\n            \"quantidade\": 2\n        },\n        {\n            \"codigoProduto\": \"{{bebida}}\",\n            \"quantidade\": 1\n        },\n        {\n            \"codigoProduto\": \"{{acompanhamento}}\",\n            \"quantidade\": 1\n        },{\n            \"codigoProduto\": \"{{sobremesa}}\",\n            \"quantidade\": 1\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido/combos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido",
+								"combos"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consultar Pedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remover produto",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantidade\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido/combos/:comboId/produtos/:codigoProduto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido",
+								"combos",
+								":comboId",
+								"produtos",
+								":codigoProduto"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								},
+								{
+									"key": "comboId",
+									"value": "2"
+								},
+								{
+									"key": "codigoProduto",
+									"value": "{{lanche}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletar Combo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido/combos/:comboId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido",
+								"combos",
+								":comboId"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								},
+								{
+									"key": "comboId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consultar Pedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "realizar pagamento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "checkout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido/checkout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido",
+								"checkout"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "acompanhamento cliente",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/acompanhamento-cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								"acompanhamento-cliente"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "string",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "acompanhamento cozinha",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/acompanhamento-cozinha",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								"acompanhamento-cozinha"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "string",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listarPedidos antes de finalizar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar pedido",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"FINALIZADO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/:codigoPedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos",
+								":codigoPedido"
+							],
+							"variable": [
+								{
+									"key": "codigoPedido",
+									"value": "{{codigoPedido}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listarPedidos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sistema-lanchonete",
+								"api",
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD",
+			"item": [
+				{
+					"name": "Cliente",
+					"item": [
+						{
+							"name": "Lista Clientes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Consulta Cliente Por CPF",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Cria Cliente",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Atualiza Cliente",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Deleta Cliente",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pedido",
+					"item": [
+						{
+							"name": "Lista Pedidos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Consulta Pedido por codigo",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Criar Pedido",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar Pedido",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar Pedido",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Acompanhamento Cozinha",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/acompanhamento-cozinha",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sistema-lanchonete",
+										"api",
+										"v1",
+										"pedidos",
+										"acompanhamento-cozinha"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "string",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Acompanhamento Cliente",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/sistema-lanchonete/api/v1/pedidos/acompanhamento-cliente",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sistema-lanchonete",
+										"api",
+										"v1",
+										"pedidos",
+										"acompanhamento-cliente"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "string",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Produto",
+					"item": [
+						{
+							"name": "Lista Produtos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Atualiza Produto",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Deleta Produto",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Cria Produto",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Consulta produtos por categoria",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pagamento",
+					"item": [
+						{
+							"name": "Realizar pagamento",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "codigoPedido",
+			"value": ""
+		},
+		{
+			"key": "codigoPedidoCpf",
+			"value": ""
+		},
+		{
+			"key": "codigoPedidoEmail",
+			"value": ""
+		},
+		{
+			"key": "lanche",
+			"value": "lanche5"
+		},
+		{
+			"key": "bebida",
+			"value": ""
+		},
+		{
+			"key": "acompanhamento",
+			"value": ""
+		},
+		{
+			"key": "sobremesa",
+			"value": ""
+		},
+		{
+			"key": "produtoToDelete",
+			"value": ""
+		},
+		{
+			"key": "codigoClientePedido",
+			"value": "2"
+		},
+		{
+			"key": "codigoClienteCPF",
+			"value": ""
+		},
+		{
+			"key": "codigoClienteEmail",
+			"value": ""
+		},
+		{
+			"key": "host",
+			"value": "http://192.168.49.2:30428"
+		}
+	]
+}
