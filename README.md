@@ -10,7 +10,7 @@
   
   Utilize a `URL` retornada para o consumo da aplicação - *Exemplo abaixo*. 
   
-  ![Exemplo]([https://github.com/kelvinlins/mssistemalanchonete/blob/c9f6bb1244d54604314e147ce19024ba77c671f7/assets/exemplo-minikube-service.png))
+  ![Exemplo](https://github.com/kelvinlins/mssistemalanchonete/blob/c9f6bb1244d54604314e147ce19024ba77c671f7/assets/exemplo-minikube-service.png)
 
 ## Executando através do Docker Compose:
   Garanta que você está na branch `develop`.  
