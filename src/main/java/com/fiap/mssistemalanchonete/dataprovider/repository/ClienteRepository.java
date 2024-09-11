@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ClienteRepository implements ClientePort {
@@ -39,7 +40,8 @@ public class ClienteRepository implements ClientePort {
 
     @Override
     public Cliente consultarClientePorCpf(String cpf) {
-        return iClienteRepository.findByCpf(cpf)
+        return Optional.ofNullable(iClienteRepository.findByCpf(cpf))
+                .map(ClienteEntity.class::cast)
                 .map(clienteMapper::toDomain)
                 .orElse(null);
     }

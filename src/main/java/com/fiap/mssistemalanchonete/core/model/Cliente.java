@@ -1,6 +1,8 @@
 package com.fiap.mssistemalanchonete.core.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -18,6 +20,9 @@ public class Cliente {
     private String nome;
     @Email(message = "Email inválido!")
     private String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotEmpty
+    private String senha;
 
     public String getCodigoAsString(){
         if (Objects.isNull(codigo)){
