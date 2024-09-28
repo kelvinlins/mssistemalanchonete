@@ -43,10 +43,10 @@ jobs:
 
       - name: Create tag repository
         run:
-          docker tag mslanchonete:latest "${{ env.ECRHOST }}/mslanchonete:${{ env.VERSION }}"
+          docker tag mslanchonete:latest "${{ env.ECRHOST }}:${{ env.VERSION }}"
 
       - name: Push Docker Image
-        run: docker push ${{ env.ECRHOST }}/mslanchonete:${{ env.VERSION }}
+        run: docker push ${{ env.ECRHOST }}:${{ env.VERSION }}
       
 
   plan:
