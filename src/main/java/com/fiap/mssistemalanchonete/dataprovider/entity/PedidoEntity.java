@@ -27,7 +27,7 @@ public class PedidoEntity {
     @Column(name="codigo_pedido")
     private String codigo;
 
-    @JoinColumn(name = "codigoCliente", nullable = true)
+    @JoinColumn(name = "codigo_cliente")
     @ManyToOne
     private ClienteEntity cliente;
 

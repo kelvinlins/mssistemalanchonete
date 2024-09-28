@@ -1,3 +1,4 @@
+
 # mssistemalanchonete
 
   Bem-vindo ao projeto **mssistemalanchonete**!  
@@ -14,7 +15,7 @@
 
 ## Executando através do Docker Compose:
   Garanta que você está na branch `develop`.  
-  Olhe para a pasta `./docker-compose` você encontrará tudo que é necessário para subir a aplicação utilizando docker compose (*yml e as enviroments referenciadas nele*).  
+  Olhe para a pasta `./docker-compose` você encontrará tudo que é necessário para subir a aplicação utilizando docker compose (um yml e as enviroments referenciadas nele).  
   Basta, a partir de `./docker-compose`, no seu linux, executar :  
   ```
   docker compose up
@@ -22,12 +23,6 @@
 
 ## Contrato
   Com aplicação rodando, acesse o endpoint `/sistema-lanchonete/api/v1/swagger-ui/index.html` e você terá o detalhamento dos endpoints expostos na aplicação.
-
-## Collection (Postman)
-  Importar a collection `MSLanchonete.postman_collection.json` localizada no diretório raiz do projeto para utilização dos endpoints da aplicação.
-
-  **OBS**: Para o funcionamento das requests é necessário alterar a variável de ambiente chamada `host` da collection para utilizar o valor do seu respectivo host, caso esteja usando a app através do Kubernetes (*Minikube*) utilizar como `host` a URL fornecida pelo mesmo, conforme mostrado no exemplo da execução via Kubernetes. Caso contrário utilizar como host `http://localhost:8080`.  
-  
 
 ## A aplicação
   Conforme escrito anteriormente, podemos gerenciar clientes, produtos e pedidos.
@@ -95,9 +90,5 @@
 ### Desenho de Arquitetura da Infraestrutura: 
 ![Diagrama - Arquitetura](https://github.com/user-attachments/assets/47b1b124-e7fe-47d2-bbe0-81a7937b3d91)
 
-### Fluxograma da Aplicação: 
-![Fluxograma - Aplicação](https://github.com/kelvinlins/mssistemalanchonete/blob/6034b4e98b6e760decd333cbb49c60730885aada/assets/Fluxograma-app.jpg)
-
 ### Video explicativo - Fase 2
 Segue o [video](https://www.youtube.com/watch?v=aRSbvq5WTiY) explicativo da fase 2 detalhando o funcionamento da aplicação na arquitetura escolhida pelo grupo. 
-

@@ -1,0 +1,41 @@
+name: Destroy terraform
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Destroy resources?'
+        type: choice
+        options:
+        - yes_sure
+        - God_forbid
+
+jobs:
+  destroy:
+    name: Destroy
+    if: ${{ github.event.inputs.action == 'yes_sure' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ vars.AWS_REGION }}
+
+    - name: Get app version
+      run: |
+        version=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "App version: $version"
+        echo "VERSION=$version" >> $GITHUB_ENV
+        
+    - name: Destroy resource
+      run: |
+        cd terraform
+        terraform fmt -recursive
+        terraform init
+        terraform destroy -var='aws_region=${{ vars.AWS_REGION }}'  -var='app_version=${{ env.VERSION }}' --auto-approve

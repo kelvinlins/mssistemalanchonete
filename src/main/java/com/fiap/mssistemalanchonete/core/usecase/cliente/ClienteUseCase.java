@@ -7,6 +7,7 @@ import com.fiap.mssistemalanchonete.core.model.Cliente;
 import com.fiap.mssistemalanchonete.core.port.ClientePort;
 import com.fiap.mssistemalanchonete.core.usecase.ClienteUseCaseFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -28,6 +29,8 @@ public class ClienteUseCase implements ClienteUseCaseFacade {
 
         if (!ObjectUtils.isEmpty(cliente.getCpf()) && !ObjectUtils.isEmpty(clientePort.consultarClientePorCpf(cliente.getCpf())))
             throw new ClienteAlreadyExistsException(cliente.getCpf());
+
+        cliente.setSenha(new BCryptPasswordEncoder().encode(cliente.getSenha()));
 
         return clientePort.salvarCliente(cliente);
     }
