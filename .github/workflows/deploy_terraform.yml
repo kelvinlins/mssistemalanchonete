@@ -47,7 +47,7 @@ jobs:
 
       - name: Push Docker Image
         run: docker push ${{ env.ECRHOST }}:${{ env.VERSION }}
-      
+        continue-on-error: true      
 
   plan:
     name: Plan
