@@ -11,12 +11,18 @@ module "mslanchonete" {
 
   project_name = var.projectname
   region       = var.aws_region
+  appversion   = var.app_version
 }
 
 variable "aws_region" {
   type        = string
   default     = "us-east-1"
   description = "AWS region"
+}
+
+variable "app_version" {
+  type        = string
+  description = "version to deploy"
 }
 
 variable "projectname" {

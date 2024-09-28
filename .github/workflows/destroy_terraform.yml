@@ -26,10 +26,16 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
+
+    - name: Get app version
+      run: |
+        version=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "App version: $version"
+        echo "VERSION=$version" >> $GITHUB_ENV
         
     - name: Destroy resource
       run: |
         cd terraform
         terraform fmt -recursive
         terraform init
-        terraform destroy -var='aws_region=${{ vars.AWS_REGION }}' --auto-approve
+        terraform destroy -var='aws_region=${{ vars.AWS_REGION }}'  -var='app_version=${{ env.VERSION }}' --auto-approve

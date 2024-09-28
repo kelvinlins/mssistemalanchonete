@@ -1,5 +1,5 @@
 data "aws_ecr_repository" "repository" {
-  name = "var.project_name-repository"
+  name = "${var.project_name}-repository"
 }
 
 
@@ -22,7 +22,7 @@ resource "kubernetes_deployment" "deployment" {
       }
       spec {
         container {
-          image = "${data.aws_ecr_repository.repository.repository_url}:${data.aws_ecr_repository.repository.most_recent_image_tags.0}"
+          image = "${data.aws_ecr_repository.repository.repository_url}:${var.appversion}"
           name  = var.project_name
           port {
             container_port = 8080

@@ -70,7 +70,7 @@ jobs:
         cd terraform
         terraform fmt -recursive
         terraform init
-        terraform plan -var='aws_region=${{ vars.AWS_REGION }}'
+        terraform plan -var='aws_region=${{ vars.AWS_REGION }}' -var='app_version=${{ env.VERSION }}'
 
   deploy:
     name: Deploy
@@ -94,4 +94,4 @@ jobs:
         cd terraform
         terraform fmt -recursive
         terraform init
-        terraform apply -var='aws_region=${{ vars.AWS_REGION }}' --auto-approve
+        terraform apply -var='aws_region=${{ vars.AWS_REGION }}'  -var='app_version=${{ env.VERSION }}' --auto-approve
