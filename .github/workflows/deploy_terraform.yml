@@ -64,13 +64,19 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
+
+    - name: Get app version
+      run: |
+        version=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "App version: $version"
+        echo "VERSION=$version" >> $GITHUB_ENV
         
     - name: Plan changes
       run: |
         cd terraform
         terraform fmt -recursive
         terraform init
-        terraform plan -var='aws_region=${{ vars.AWS_REGION }}' -var='app_version=${{ env.VERSION }}' -var="tokensecret=${{ vars.TSECRET }}"
+        terraform plan -var='aws_region=${{ vars.AWS_REGION }}' -var='app_version=${{ env.VERSION }}' -var="tokensecret=${{ secrets.TSECRET }}"
 
   deploy:
     name: Deploy
@@ -88,10 +94,16 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
+
+    - name: Get app version
+      run: |
+        version=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "App version: $version"
+        echo "VERSION=$version" >> $GITHUB_ENV
         
     - name: Apply changes
       run: |
         cd terraform
         terraform fmt -recursive
         terraform init
-        terraform apply -var='aws_region=${{ vars.AWS_REGION }}'  -var='app_version=${{ env.VERSION }}' -var="tokensecret=${{ vars.TSECRET }}" --auto-approve
+        terraform apply -var='aws_region=${{ vars.AWS_REGION }}'  -var='app_version=${{ env.VERSION }}' -var="tokensecret=${{ secrets.TSECRET }}" --auto-approve
