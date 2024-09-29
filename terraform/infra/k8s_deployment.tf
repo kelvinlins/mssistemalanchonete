@@ -4,6 +4,7 @@ data "aws_ecr_repository" "repository" {
 
 
 resource "kubernetes_deployment" "deployment" {
+  depends_on = [kubernetes_secret.token_secret]
   metadata {
     name = "${var.project_name}-deployment"
   }
@@ -59,6 +60,16 @@ resource "kubernetes_deployment" "deployment" {
               secret_key_ref {
                 name = "${var.project_name}-secret-database"
                 key  = "password"
+              }
+            }
+          }
+
+          env {
+            name = "TOKEN_SECRET"
+            value_from {
+              secret_key_ref {
+                name = "${var.project_name}-token-secret"
+                key  = "secret"
               }
             }
           }

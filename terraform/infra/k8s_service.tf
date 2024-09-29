@@ -24,7 +24,7 @@ data "kubernetes_service" "service" {
 }
 
 resource "kubernetes_ingress_v1" "ingress" {
-  depends_on             = [kubernetes_service.service]
+  depends_on = [kubernetes_service.service]
   # wait_for_load_balancer = true
   metadata {
     name = "${var.project_name}-ingress"
@@ -33,8 +33,8 @@ resource "kubernetes_ingress_v1" "ingress" {
       "alb.ingress.kubernetes.io/target-type"        = "instance"
       "alb.ingress.kubernetes.io/scheme"             = "internal"
       "alb.ingress.kubernetes.io/load-balancer-name" = "${var.project_name}-ingress2"
-      "alb.ingress.kubernetes.io/healthcheck-path" = "/sistema-lanchonete/api/v1/pedidos"
-      "alb.ingress.kubernetes.io/success-codes" = "200-404"
+      "alb.ingress.kubernetes.io/healthcheck-path"   = "/sistema-lanchonete/api/v1/pedidos"
+      "alb.ingress.kubernetes.io/success-codes"      = "200-404"
     }
   }
 
