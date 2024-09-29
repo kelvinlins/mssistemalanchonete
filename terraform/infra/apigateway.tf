@@ -18,7 +18,9 @@ module "api_gateway" {
   # Routes & Integration(s)
   routes = {
 
-    "ANY /{proxy+}" = {
+    "ANY /produtos/{proxy+}" = {
+      authorization_type = "CUSTOM"
+      authorizer_id      = aws_apigatewayv2_authorizer.lambda-auth.id
       integration = {
         connection_type = "VPC_LINK"
         uri             = data.aws_lb_listener.ingress.arn
@@ -86,3 +88,24 @@ module "api_gateway_security_group" {
   }
 }
 
+data "aws_lambda_function" "lambda" {
+  function_name = "lambda-auth-lanchonete"
+}
+
+resource "aws_apigatewayv2_authorizer" "lambda-auth" {
+  api_id           = module.api_gateway.api_id
+  authorizer_type  = "REQUEST"
+  identity_sources = ["$request.header.Authorization"]
+  name             = "${var.project_name}-lamba-auth"
+  authorizer_payload_format_version = "2.0"
+  enable_simple_responses = true
+  authorizer_uri = data.aws_lambda_function.lambda.invoke_arn
+}
+
+resource "aws_lambda_permission" "allow_api_gw_invoke_authorizer" {  
+  statement_id  = "allowInvokeFromAPIGatewayAuthorizer"  
+  action        = "lambda:InvokeFunction"  
+  function_name = data.aws_lambda_function.lambda.function_name
+  principal     = "apigateway.amazonaws.com"  
+  source_arn    = "${module.api_gateway.api_execution_arn}/authorizers/${aws_apigatewayv2_authorizer.lambda-auth.id}"
+}
