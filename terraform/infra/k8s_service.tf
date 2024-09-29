@@ -28,6 +28,7 @@ resource "kubernetes_ingress_v1" "ingress" {
       "alb.ingress.kubernetes.io/load-balancer-name" = "${var.project_name}-ingress2"
       "alb.ingress.kubernetes.io/healthcheck-path"   = "/sistema-lanchonete/api/v1/pedidos"
       "alb.ingress.kubernetes.io/success-codes"      = "200-404"
+      "alb.ingress.kubernetes.io/tags"               = "Name=${var.project_name}-ingress"
     }
   }
 
