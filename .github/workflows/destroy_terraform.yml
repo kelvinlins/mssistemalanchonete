@@ -38,4 +38,4 @@ jobs:
         cd terraform
         terraform fmt -recursive
         terraform init
-        terraform destroy -var='aws_region=${{ vars.AWS_REGION }}'  -var='app_version=${{ env.VERSION }}' -var="tokensecret=${{ vars.TSECRET }}" --auto-approve
+        terraform destroy -var='aws_region=${{ vars.AWS_REGION }}'  -var='app_version=${{ env.VERSION }}' -var="tokensecret=${{ secrets.TSECRET }}" --auto-approve
