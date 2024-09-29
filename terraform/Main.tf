@@ -12,6 +12,7 @@ module "mslanchonete" {
   project_name = var.projectname
   region       = var.aws_region
   appversion   = var.app_version
+  token_secret = var.tokensecret
 }
 
 variable "aws_region" {
@@ -31,6 +32,7 @@ variable "projectname" {
   description = "Application Name"
 }
 
-output "service_host" {
-  value = module.mslanchonete.load_balancer_hostname
+variable "tokensecret" {
+  type      = string
+  sensitive = true
 }

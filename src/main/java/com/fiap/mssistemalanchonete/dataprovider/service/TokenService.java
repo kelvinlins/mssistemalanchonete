@@ -13,7 +13,7 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService implements TokenPort {
 
-    @Value("${api.security.token.secret}")
+    @Value("${api.auth.token.secret}")
     private String tokenSecret;
 
     public String generateToken(String login){

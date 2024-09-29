@@ -1,6 +1,6 @@
 module "api_gateway" {
-  source = "terraform-aws-modules/apigateway-v2/aws"
-  depends_on = [ kubernetes_ingress_v1.ingress ]
+  source     = "terraform-aws-modules/apigateway-v2/aws"
+  depends_on = [kubernetes_ingress_v1.ingress]
 
   # API
   cors_configuration = {
@@ -17,7 +17,7 @@ module "api_gateway" {
 
   # Routes & Integration(s)
   routes = {
-    
+
     "ANY /{proxy+}" = {
       integration = {
         connection_type = "VPC_LINK"
@@ -57,7 +57,7 @@ module "api_gateway" {
 # Supporting Resources
 ################################################################################
 data "aws_lb" "ingress" {
-  depends_on = [ kubernetes_ingress_v1.ingress ]
+  depends_on = [kubernetes_ingress_v1.ingress]
   tags = {
     Name = "${var.project_name}-ingress"
   }
@@ -81,7 +81,7 @@ module "api_gateway_security_group" {
 
   egress_rules = ["all-all"]
 
-   tags = {
+  tags = {
     Name = "${var.project_name}-apigateway-sg"
   }
 }
