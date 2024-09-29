@@ -16,16 +16,9 @@ resource "kubernetes_service" "service" {
   }
 }
 
-data "kubernetes_service" "service" {
-  depends_on = [kubernetes_service.service]
-  metadata {
-    name = "${var.project_name}-service"
-  }
-}
-
 resource "kubernetes_ingress_v1" "ingress" {
   depends_on = [kubernetes_service.service]
-  # wait_for_load_balancer = true
+  wait_for_load_balancer = true
   metadata {
     name = "${var.project_name}-ingress"
     annotations = {
@@ -68,12 +61,3 @@ resource "kubernetes_ingress_v1" "ingress" {
   }
 }
 
-output "load_balancer_hostname" {
-  depends_on = [data.kubernetes_service.service]
-  value      = data.kubernetes_service.service.status.0.load_balancer.0.ingress.0.hostname
-}
-
-# output "load_balancer_hostname" {
-#   depends_on = [data.kubernetes_service.service, kubernetes_ingress_v1.ingress]
-#   value      = kubernetes_ingress_v1.ingress.status
-# }
