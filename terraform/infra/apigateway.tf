@@ -18,9 +18,27 @@ module "api_gateway" {
   # Routes & Integration(s)
   routes = {
 
-    "ANY /produtos/{proxy+}" = {
-      authorization_type = "CUSTOM"
-      authorizer_id      = aws_apigatewayv2_authorizer.lambda-auth.id
+    "ANY /sistema-lanchonete/api/v1/auth" = {
+      integration = {
+        connection_type = "VPC_LINK"
+        uri             = data.aws_lb_listener.ingress.arn
+        type            = "HTTP_PROXY"
+        method          = "ANY"
+        vpc_link_key    = "my-vpc"
+      }
+    }
+
+    "ANY /sistema-lanchonete/api/v1/auth/{proxy+}" = {
+      integration = {
+        connection_type = "VPC_LINK"
+        uri             = data.aws_lb_listener.ingress.arn
+        type            = "HTTP_PROXY"
+        method          = "ANY"
+        vpc_link_key    = "my-vpc"
+      }
+    }
+
+    "POST /sistema-lanchonete/api/v1/clientes" = {
       integration = {
         connection_type = "VPC_LINK"
         uri             = data.aws_lb_listener.ingress.arn
@@ -31,6 +49,8 @@ module "api_gateway" {
     }
 
     "$default" = {
+      authorization_type = "CUSTOM"
+      authorizer_id      = aws_apigatewayv2_authorizer.lambda-auth.id
       integration = {
         connection_type = "VPC_LINK"
         uri             = data.aws_lb_listener.ingress.arn
