@@ -92,6 +92,8 @@
 ### Banco de Dados: 
 ![MER - Banco de dados](https://github.com/kelvinlins/mssistemalanchonete/blob/7708e866687a1babab1b8f074414e292b4ac2a81/assets/MER.png)
 
+Para a aplicação, foi utilizado como banco de dados uma instância do banco relacional **PostgreSQL** através do serviço **Amazon RDS**. A escolha desse serviço ocorreu principalmente pela praticidade na configuração e gerenciamento do banco de dados por parte da AWS, e por suas capacidades de alta disponibilidade e escalonamento, que são muito importantes em ambiente produtivo. A escolha do PostgreSQL como SGBD se deu por conta de sua característica estruturada (SQL), visto que os bancos de dados relacionais garantem consistência e integridade dos dados (ACID), que são características importantes nesse tipo de aplicação, já que estamos trabalhando com cadastro de clientes, login e efetuação de pedidos.
+
 ### Video explicativo - Fase 2
 Segue o [video](https://www.youtube.com/watch?v=aRSbvq5WTiY) explicativo da fase 2 detalhando o funcionamento da aplicação na arquitetura escolhida pelo grupo. 
 
