@@ -14,7 +14,7 @@
 
 ## Executando através do Docker Compose:
   Garanta que você está na branch `develop`.  
-  Olhe para a pasta `./docker-compose` você encontrará tudo que é necessário para subir a aplicação utilizando docker compose (*yml e as enviroments referenciadas nele*).  
+  Olhe para a pasta `./docker-compose` você encontrará tudo que é necessário para subir a aplicação utilizando docker compose (um yml e as enviroments referenciadas nele).  
   Basta, a partir de `./docker-compose`, no seu linux, executar :  
   ```
   docker compose up
@@ -22,12 +22,6 @@
 
 ## Contrato
   Com aplicação rodando, acesse o endpoint `/sistema-lanchonete/api/v1/swagger-ui/index.html` e você terá o detalhamento dos endpoints expostos na aplicação.
-
-## Collection (Postman)
-  Importar a collection `MSLanchonete.postman_collection.json` localizada no diretório raiz do projeto para utilização dos endpoints da aplicação.
-
-  **OBS**: Para o funcionamento das requests é necessário alterar a variável de ambiente chamada `host` da collection para utilizar o valor do seu respectivo host, caso esteja usando a app através do Kubernetes (*Minikube*) utilizar como `host` a URL fornecida pelo mesmo, conforme mostrado no exemplo da execução via Kubernetes. Caso contrário utilizar como host `http://localhost:8080`.  
-  
 
 ## A aplicação
   Conforme escrito anteriormente, podemos gerenciar clientes, produtos e pedidos.
@@ -95,9 +89,15 @@
 ### Desenho de Arquitetura da Infraestrutura: 
 ![Diagrama - Arquitetura](https://github.com/user-attachments/assets/47b1b124-e7fe-47d2-bbe0-81a7937b3d91)
 
-### Fluxograma da Aplicação: 
-![Fluxograma - Aplicação](https://github.com/kelvinlins/mssistemalanchonete/blob/6034b4e98b6e760decd333cbb49c60730885aada/assets/Fluxograma-app.jpg)
+### Banco de Dados: 
+![MER - Banco de dados](https://github.com/kelvinlins/mssistemalanchonete/blob/7708e866687a1babab1b8f074414e292b4ac2a81/assets/MER.png)
+
+Para a aplicação, foi utilizado como banco de dados uma instância do banco relacional **PostgreSQL** através do serviço **Amazon RDS**. A escolha desse serviço ocorreu principalmente pela praticidade na configuração e gerenciamento do banco de dados por parte da AWS, e por suas capacidades de alta disponibilidade e escalonamento, que são muito importantes em ambiente produtivo. A escolha do PostgreSQL como SGBD se deu por conta de sua característica estruturada (SQL), visto que os bancos de dados relacionais garantem consistência e integridade dos dados (ACID), que são características importantes nesse tipo de aplicação, já que estamos trabalhando com cadastro de clientes, login e efetuação de pedidos.
+
+### Autenticação: 
+![Diagrama - Autenticação](https://github.com/kelvinlins/mssistemalanchonete/blob/a365165909f2cf20882c7c1b87fc8bc1a9e99ba5/assets/auth.jpg)
+
+O usuário pode realizar o login utilizando o endpoint `/sistema-lanchonete/api/v1/auth` informando seu **CPF** e **senha** utilizados na realização do seu cadastro, caso o usuário tenha cadastro e suas informações estiverem corretas, será retornado um token JWT válido por 1 hora que deverá ser passado nas chamadas dos endpoints da aplicação. O API Gateway será responsável por executar a função lambda que realiza a validação do token JWT enviado nas requisições da aplicação, caso o mesmo seja válido, a requisição poderá ser feita com sucesso, caso contrario a aplicação retornará um erro de autenticação.
 
 ### Video explicativo - Fase 2
 Segue o [video](https://www.youtube.com/watch?v=aRSbvq5WTiY) explicativo da fase 2 detalhando o funcionamento da aplicação na arquitetura escolhida pelo grupo. 
-
