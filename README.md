@@ -89,6 +89,9 @@
 ### Desenho de Arquitetura da Infraestrutura: 
 ![Diagrama - Arquitetura](https://github.com/user-attachments/assets/47b1b124-e7fe-47d2-bbe0-81a7937b3d91)
 
+### Banco de Dados: 
+![MER - Banco de dados](https://github.com/kelvinlins/mssistemalanchonete/blob/7708e866687a1babab1b8f074414e292b4ac2a81/assets/MER.png)
+
 ### Video explicativo - Fase 2
 Segue o [video](https://www.youtube.com/watch?v=aRSbvq5WTiY) explicativo da fase 2 detalhando o funcionamento da aplicação na arquitetura escolhida pelo grupo. 
 
