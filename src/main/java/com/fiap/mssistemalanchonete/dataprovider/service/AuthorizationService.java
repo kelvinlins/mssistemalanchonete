@@ -18,3 +18,4 @@ public class AuthorizationService implements UserDetailsService {
     public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
         return clienteRepository.findByCpf(cpf);
     }
+}
