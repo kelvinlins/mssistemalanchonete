@@ -88,7 +88,25 @@
   - Amazon RDS: Banco de dados relacional para armazenar dados de clientes, produtos e pedidos.
 
 ### Desenho de Arquitetura da Infraestrutura: 
-![Diagrama - Arquitetura](https://github.com/user-attachments/assets/47b1b124-e7fe-47d2-bbe0-81a7937b3d91)
+![Diagrama - Arquitetura](/assets/infra.png)
 
 ### Video explicativo - Fase 2
 Segue o [video](https://www.youtube.com/watch?v=aRSbvq5WTiY) explicativo da fase 2 detalhando o funcionamento da aplicação na arquitetura escolhida pelo grupo. 
+
+## CI/CD
+Alguns passos de ci/cd foram implementados utilizando terraform e github-actions.   
+O cluster EKS e a infra necessária para ele são disponibilizadas utilizando [esse respositório](https://github.com/guilherme0541/mslanchonete-infra-eks).   
+O instaância RDS é provisionada através [desse](https://github.com/guilherme0541/mslanchonete-db-secreteKubernetes).   
+Já a lambda utilizada para autenticação é provisionada [aqui](https://github.com/Guimaj/lambda-auth-mslanchonete).   
+Toda essa infra precisa ser preparada previamente para que a automação desse repositório possa ser executada.   
+As actions desse repositório compilam, buildam e publicam a aplicação em um repositório privado no ECR e fazem deploy no cluster EKS. Elas também disponibilizam a api através de um load balancer e um apigateway com autorização feita pela lambda citada acima.
+
+### Variaveis e Secrets
+Para executar os scripts diretamente do github, é necessário criar a variable `AWS_REGION` que é o código da região AWS e  as secrets `TSECRET, AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY`, respectivamente a secret usada no JWT, o ID e chave de acesso de um usuário AWS com permissões suficientes para criar e alterar os recursos citados acima.  
+
+### Execução
+A automação ( **Deploy terraform** ) roda a partir de pull-requests para a `main`: na abertura ela publica a nova versão da aplicação e valida as alterações necessárias no ambiente, no merge ela aplica as alterações. Também é possivel acionar a automação manualmente no menu action do github.
+Para fazer o desprovisionamento da infra também existe uma action nesse repositório: **Deploy terraform**. Ela precisa ser acionada manualmente e escolhendo "Yes_sure" mo menu suspenso o processo é iniciado.
+
+### Consumindo a API
+Após a conclusão da action de deploy você precisará pegar o endereço do host no api gateway na sua conta AWS.
